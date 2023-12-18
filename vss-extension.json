@@ -1,0 +1,84 @@
+{
+    "manifestVersion": 1,
+    "id": "sysdig-scan-task",
+    "name": "Sysdig Secure Image Scanning",
+    "version": "0.6.0",
+    "publisher": "DanielMoloney",
+    "description": "Scan images with Sysdig Secure as part of your development pipeline.",
+    "public": true,
+    "galleryFlags": [
+        "Preview"
+    ],
+    "targets": [
+        {
+            "id": "Microsoft.VisualStudio.Services"
+        }
+    ],
+    "icons": {
+        "default": "images/sysdig.png"
+    },
+    "categories": [
+        "Azure Pipelines"
+    ],
+    "branding": {
+        "color": "rgb(255, 255, 255)",
+        "theme": "light"
+    },
+    "content": {
+        "details": {
+            "path": "README.md"
+        },
+        "license": {
+            "path": "license-terms.md"
+        }
+    },
+    "tags": [
+        "Container",
+        "Security",
+        "Scanning"
+    ],
+    "links": {
+        "home": {
+            "uri": "https://sysdig.com/"
+        },
+        "getstarted": {
+            "uri": "https://docs.sysdig.com/en/integrate-with-ci-cd-tools.html"
+        },
+        "learn": {
+            "uri": "https://docs.sysdig.com/en/release-notes.html"
+        },
+        "privacypolicy": {
+            "uri": "https://sysdig.com/privacy-policy/"
+        },
+        "support": {
+            "uri": "https://sysdig.com/support/submit-ticket/"
+        }
+    },
+    "contributions": [
+        {
+            "id": "sysdig-scan-task",
+            "type": "ms.vss-distributed-task.task",
+            "targets": [
+                "ms.vss-distributed-task.tasks"
+            ],
+            "properties": {
+                "name": "sysdig-scan-task",
+                "iconAsset": "DanielMoloney.sysdig-scan-task/images/sysdig.png",
+                "includesData": {
+                    "assets": [
+                        "DanielMoloney.sysdig-scan-task/images/sysdig.png"
+                    ]
+                }
+            }
+        }
+    ],
+    "files": [
+        {
+            "path": "sysdig-scan-task"
+        },
+        {
+            "path": "images/sysdig.png",
+            "addressable": true
+        }
+    ]
+}

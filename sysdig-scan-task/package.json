@@ -1,0 +1,29 @@
+{
+  "name": "sysdig-scan-task",
+  "version": "1.0.0",
+  "description": "Sysdig Secure Scan Task",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
+    "app": "node dist/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SysdigDan/sysdig-azure-devops-task.git"
+  },
+  "author": "Sysdig",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SysdigDan/sysdig-azure-devops-task/issues"
+  },
+  "homepage": "https://github.com/SysdigDan/sysdig-azure-devops-task#readme",
+  "dependencies": {
+    "azure-pipelines-task-lib": "^3.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^16.11.7",
+    "@types/q": "^1.5.5",
+    "typescript": "^4.5.5"
+  }
+}
