@@ -44,6 +44,10 @@ export class InputFetch {
         return tl.getBoolInput('techPreview');
     }
 
+    get jsonOutput(): boolean {
+        return tl.getBoolInput('jsonOutput');
+    }
+
     private error(input: string, required: boolean): string {
         if (required) {
             tl.setResult(tl.TaskResult.Failed, input.toUpperCase().concat(' fetch failed.'));

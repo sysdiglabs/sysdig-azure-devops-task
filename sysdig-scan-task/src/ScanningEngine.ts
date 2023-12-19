@@ -59,6 +59,9 @@ export function buildScanningEngineArg(binaryPath: string): tr.ToolRunner {
     scanningEngine.arg(['--skiptlsverify']);
   }
 
+  if (fetch.jsonOutput) {
+    scanningEngine.arg(['--json-scan-result=./sysdig-inline-scan-result.json']);
+  }
   // Add image to be scanned
   scanningEngine.arg(fetch.image);
 

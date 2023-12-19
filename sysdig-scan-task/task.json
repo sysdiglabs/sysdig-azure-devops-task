@@ -1,7 +1,7 @@
 {
     "$schema": "https://raw.githubusercontent.com/Microsoft/azure-pipelines-task-lib/master/tasks.schema.json",
-    "id": "5e925c66-5756-4f05-9238-258072d441c8",
-    "name": "Sysdig",
+    "id": "5e925c66-5756-4f05-9238-258072d441c3",
+    "name": "Sysdig-Inline-Scan",
     "friendlyName": "Sysdig Secure Image Scanning",
     "description": "Scan images with Sysdig Secure as part of your development pipeline.",
     "helpMarkDown": "",
@@ -10,7 +10,7 @@
     "version": {
         "Major": 0,
         "Minor": 6,
-        "Patch": 0
+        "Patch": 3
     },
     "groups": [
         {
@@ -109,6 +109,15 @@
             "defaultValue": false,
             "required": false,
             "helpMarkDown": "Use Sysdig Scanning Engine (Tech Preview) - https://docs.sysdig.com/en/docs/sysdig-secure/scanning/new-scanning-engine/",
+            "groupName": "overrides"
+        },
+        {
+            "name": "jsonOutput",
+            "type": "boolean",
+            "label": "JSON output of the result",
+            "defaultValue": false,
+            "required": false,
+            "helpMarkDown": "Export JSON result file to $(System.DefaultWorkingDirectory)/sysdig-inline-scan-result.json",
             "groupName": "overrides"
         }
     ],
