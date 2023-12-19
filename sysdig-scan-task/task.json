@@ -10,7 +10,7 @@
     "version": {
         "Major": 0,
         "Minor": 6,
-        "Patch": 3
+        "Patch": 6
     },
     "groups": [
         {
@@ -118,6 +118,15 @@
             "defaultValue": false,
             "required": false,
             "helpMarkDown": "Export JSON result file to $(System.DefaultWorkingDirectory)/sysdig-inline-scan-result.json",
+            "groupName": "overrides"
+        },
+        {
+            "name": "jsonOutputFile",
+            "type": "string",
+            "label": "JSON output file of the result. It will be ignored if jsonOutput is false",
+            "defaultValue": "sysdig-inline-scan-result.json",
+            "required": false,
+            "helpMarkDown": "What file to export the result to. It will be ignored if jsonOutput is false",
             "groupName": "overrides"
         }
     ],

@@ -2,7 +2,7 @@
     "manifestVersion": 1,
     "id": "sysdig-scan-task",
     "name": "Sysdig Secure Image Scanning",
-    "version": "0.6.2",
+    "version": "0.6.6",
     "publisher": "IgorEulalio",
     "description": "Scan images with Sysdig Secure as part of your development pipeline.",
     "public": true,
@@ -69,6 +69,15 @@
                         "IgorEulalio.sysdig-scan-task/images/sysdig.png"
                     ]
                 }
+            }
+        },
+        {
+            "id": "sysdig-html-tab",
+            "type": "ms.vss-build-web.build-results-tab",
+            "targets": ["ms.vss-build-web.build-results-view"],
+            "properties": {
+                "name": "HTML Report",
+                "uri": "htmlReportTab.html"
             }
         }
     ],

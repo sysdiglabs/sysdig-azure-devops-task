@@ -48,6 +48,10 @@ export class InputFetch {
         return tl.getBoolInput('jsonOutput');
     }
 
+    get jsonOutputFile(): string {
+        return this.fetchString('jsonOutputFile', false);
+    }
+
     private error(input: string, required: boolean): string {
         if (required) {
             tl.setResult(tl.TaskResult.Failed, input.toUpperCase().concat(' fetch failed.'));

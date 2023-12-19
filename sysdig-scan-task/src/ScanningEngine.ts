@@ -60,7 +60,7 @@ export function buildScanningEngineArg(binaryPath: string): tr.ToolRunner {
   }
 
   if (fetch.jsonOutput) {
-    scanningEngine.arg(['--json-scan-result=./sysdig-inline-scan-result.json']);
+    scanningEngine.arg(['--json-scan-result=' + fetch.jsonOutputFile]);
   }
   // Add image to be scanned
   scanningEngine.arg(fetch.image);
