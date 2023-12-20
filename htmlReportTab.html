@@ -1,8 +1,15 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <script src="https://cdn.vsassets.io/v/M165_20210910.4/_scripts/TFS/min/VSS.SDK.min.js"></script>
+    <!-- <script src="node_modules/vss-web-extension-sdk/lib/VSS.SDK.min.js"></script> -->
+    <script src="lib/VSS.SDK.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js"></script>
+
+    <!-- <script src="https://cdn.vsassets.io/v/M165_20210910.4/_scripts/TFS/min/VSS.SDK.min.js"></script> -->
+
 </head>
+
 <body>
     <div id="htmlContent">Loading...</div>
 
@@ -14,34 +21,96 @@
         });
 
         VSS.ready(function () {
-            VSS.require(["TFS/Build/BuildRestClient"], function (_BuildClient) {
-                VSS.getService(VSS.ServiceIds.Build).then(function(buildService) {
-                    buildService.onBuildChanged(function(build) {
-                        var buildId = build.id;
-                        var projectId = VSS.getWebContext().project.id;
-                        console.log(buildId, projectId);
+            var buildLogicExecuted = false;
 
-                        var client = _BuildClient.getClient();
-                        client.getPlanAttachments(projectId, "build", buildId, "htmlReport").then(function(attachments) {
-                            var attachment = attachments[0]; // assuming there is one attachment with the name "htmlReport"
-                            client.getAttachmentContent(projectId, "build", buildId, attachment.timelineId, attachment.recordId, attachment.type, attachment.name).then(function(content) {
-                                var htmlContent = new TextDecoder('utf-8').decode(content);
-                                document.getElementById("htmlContent").innerHTML = htmlContent;
-                                VSS.notifyLoadSucceeded();
-                            }).catch(function(err) {
-                                console.error('Error fetching attachment content', err);
-                                VSS.notifyLoadFailed(err);
-                            });
-                        }).catch(function(err) {
-                            console.error('Error fetching attachments', err);
-                            VSS.notifyLoadFailed(err);
-                        });
+            var vssConfig = VSS.getConfiguration();
+            vssConfig.onBuildChanged(function (build) {
+                if (!buildLogicExecuted && build && build.id) {
+                    var buildId = build.id;
+                    var projectId = VSS.getWebContext().project.id;
+                    console.log("Build ID: " + buildId);
+
+                    buildLogicExecuted = true; // Set the flag to true to avoid re-execution
+                    // VSS.require(["TFS/Build/BuildRestClient"], function (_BuildClient) {
+                    //     var client = _BuildClient.getClient();
+                    //     client.getArtifacts(projectId, buildId).then(function (artifacts) {
+                    //         // process the artifacts
+                    //         var htmlReportArtifact = artifacts.find(artifact => artifact.name === "htmlReport");
+                    //         if (htmlReportArtifact) {
+                    //             // Fetch file output.html from htmlReport artifact 
+                    //             client.getArtifactContentZip(projectId, buildId, htmlReportArtifact.name, "output.html").then(function (content) {
+                    //                 // Convert the binary content to a text string and display it
+                    //                 var htmlContent = new TextDecoder('utf-8').decode(new Uint8Array(content));
+                    //                 document.getElementById("htmlContent").innerHTML = htmlContent;
+                    //                 VSS.notifyLoadSucceeded();
+                    //             }).catch(function (err) {
+                    //                 console.error('Error fetching artifact content', err);
+                    //             });
+                    //         } else {
+                    //             console.error('HTML report artifact not found');
+                    //         }
+                    //     }).catch(function (err) {
+                    //         console.error(err);
+                    //         document.getElementById("htmlContent").innerText = "Error loading report: " + err.message;
+                    //         VSS.notifyLoadFailed(err.message);
+                    //     });
+                    // });
+                    VSS.getAccessToken().then(function (token) {
+                        const accessToken = token.token;
+                        const appId = token.appId;
+                        console.log("app_id")
+                        console.log(appId)
+                        console.log("token")
+                        console.log(accessToken)
+                        buildArtifacts = fetchBuildArtifacts(projectId, buildId, accessToken);
+                    }).catch(function (err) {
+                        console.error(err);
+                        document.getElementById("htmlContent").innerText = "Error loading report: " + err.message;
+                        VSS.notifyLoadFailed(err.message);
                     });
-                }).catch(function(err) {
-                    console.error('Failed to get build service:', err);
-                });
+                }
+                function fetchBuildArtifacts(projectId, buildId, accessToken) {
+                    const apiUrl = `https://dev.azure.com/${VSS.getWebContext().collection.name}/${projectId}/_apis/build/builds/${buildId}/artifacts?artifactName=html_report&api-version=7.1&%24format=zip`;
+
+                    fetch(apiUrl, {
+                        method: 'GET',
+                        headers: {
+                            'Authorization': `Bearer ${accessToken}`
+                        },
+                        redirect: 'follow' // Ensure redirects are followed
+                    })
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error('Network response was not ok: ' + response.statusText);
+                            }
+                            console.log("response")
+                            console.log(response)
+                            return response.blob(); // Get the response as a blob
+                        })
+                        .then(blob => {
+                            console.log("blob")
+                            console.log(blob)
+                            var jszip = new JSZip();
+                            return jszip.loadAsync(blob); // Load the blob into JSZip
+                        })
+                        .then(zip => {
+                            console.log("zip")
+                            console.log(zip)
+                            // Assuming the file is located at 'html_report/output.html' in the zip
+                            return zip.file("html_report/output.html").async("string");
+                        })
+                        .then(htmlContent => {
+                            // Use the HTML content as needed
+                            document.getElementById("htmlContent").innerHTML = htmlContent;
+                        })
+                        .catch(error => console.error('Error:', error));
+                }
+
             });
+
+            VSS.notifyLoadSucceeded(); // Notify that the extension load is complete
         });
     </script>
 </body>
+
 </html>
