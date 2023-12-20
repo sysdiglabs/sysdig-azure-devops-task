@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <script src="https://cdn.vsassets.io/v/M142_20211006.6/_scripts/TFS/min/VSS.SDK.js"></script>
+    <script src="https://cdn.vsassets.io/v/M165_20210910.4/_scripts/TFS/min/VSS.SDK.min.js"></script>
 </head>
 <body>
     <div id="htmlContent">Loading...</div>
@@ -13,24 +13,35 @@
             usePlatformStyles: true
         });
 
-        VSS.require("TFS/DistributedTask/TaskRestClient", function(TFS_DT) {
-            VSS.ready(function() {
-                var projectId = VSS.getWebContext().project.id;
-                var buildId = VSS.getConfiguration().data.id;
+        VSS.ready(function () {
+            VSS.require(["TFS/Build/BuildRestClient"], function (_BuildClient) {
+                VSS.getService(VSS.ServiceIds.Build).then(function(buildService) {
+                    buildService.onBuildChanged(function(build) {
+                        var buildId = build.id;
+                        var projectId = VSS.getWebContext().project.id;
+                        console.log(buildId, projectId);
 
-                var client = TFS_DT.getClient();
-                client.getPlanAttachments(projectId, "build", buildId, "htmlReport").then(function(attachments) {
-                    var attachment = attachments[0]; // assuming there is one attachment with the name "htmlReport"
-                    client.getAttachmentContent(projectId, "build", buildId, attachment.timelineId, attachment.recordId, attachment.type, attachment.name).then(function(content) {
-                        // Assuming the content is a string. If binary, you would need to handle it differently.
-                        var htmlContent = new TextDecoder('utf-8').decode(content);
-                        document.getElementById("htmlContent").innerHTML = htmlContent;
+                        var client = _BuildClient.getClient();
+                        client.getPlanAttachments(projectId, "build", buildId, "htmlReport").then(function(attachments) {
+                            var attachment = attachments[0]; // assuming there is one attachment with the name "htmlReport"
+                            client.getAttachmentContent(projectId, "build", buildId, attachment.timelineId, attachment.recordId, attachment.type, attachment.name).then(function(content) {
+                                var htmlContent = new TextDecoder('utf-8').decode(content);
+                                document.getElementById("htmlContent").innerHTML = htmlContent;
+                                VSS.notifyLoadSucceeded();
+                            }).catch(function(err) {
+                                console.error('Error fetching attachment content', err);
+                                VSS.notifyLoadFailed(err);
+                            });
+                        }).catch(function(err) {
+                            console.error('Error fetching attachments', err);
+                            VSS.notifyLoadFailed(err);
+                        });
                     });
+                }).catch(function(err) {
+                    console.error('Failed to get build service:', err);
                 });
             });
         });
-
-        VSS.notifyLoadSucceeded();
     </script>
 </body>
 </html>

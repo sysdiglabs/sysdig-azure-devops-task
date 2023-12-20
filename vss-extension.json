@@ -2,7 +2,7 @@
     "manifestVersion": 1,
     "id": "sysdig-scan-task",
     "name": "Sysdig Secure Image Scanning",
-    "version": "0.6.6",
+    "version": "0.6.20",
     "publisher": "IgorEulalio",
     "description": "Scan images with Sysdig Secure as part of your development pipeline.",
     "public": true,
@@ -36,6 +36,10 @@
         "Container",
         "Security",
         "Scanning"
+    ],
+    "scopes": [
+        "vso.build_execute",
+        "vso.release_execute"
     ],
     "links": {
         "home": {
@@ -74,7 +78,9 @@
         {
             "id": "sysdig-html-tab",
             "type": "ms.vss-build-web.build-results-tab",
-            "targets": ["ms.vss-build-web.build-results-view"],
+            "targets": [
+                "ms.vss-build-web.build-results-view"
+            ],
             "properties": {
                 "name": "HTML Report",
                 "uri": "htmlReportTab.html"
@@ -88,6 +94,15 @@
         {
             "path": "images/sysdig.png",
             "addressable": true
+        },
+        {
+            "path": "htmlReportTab.html",
+            "addressable": true
+        },
+        {
+            "path": "node_modules/vss-web-extension-sdk/lib",
+            "addressable": true,
+            "packagePath": "lib"
         }
     ]
 }
