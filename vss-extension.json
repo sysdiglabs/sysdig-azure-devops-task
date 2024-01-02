@@ -2,7 +2,7 @@
     "manifestVersion": 1,
     "id": "sysdig-scan-task",
     "name": "Sysdig Secure Image Scanning",
-    "version": "0.6.35",
+    "version": "0.6.47",
     "publisher": "IgorEulalio",
     "description": "Scan images with Sysdig Secure as part of your development pipeline.",
     "public": true,
@@ -101,6 +101,11 @@
         },
         {
             "path": "node_modules/vss-web-extension-sdk/lib",
+            "addressable": true,
+            "packagePath": "lib"
+        },
+        {
+            "path": "sysdig-scan-task/node_modules",
             "addressable": true,
             "packagePath": "lib"
         }

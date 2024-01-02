@@ -52,6 +52,10 @@ export class InputFetch {
         return this.fetchString('jsonOutputFile', false);
     }
 
+    get autoPublishArtifacts(): boolean {
+        return tl.getBoolInput('autoPublishArtifacts', false);
+    }
+
     private error(input: string, required: boolean): string {
         if (required) {
             tl.setResult(tl.TaskResult.Failed, input.toUpperCase().concat(' fetch failed.'));

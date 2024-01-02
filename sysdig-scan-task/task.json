@@ -10,7 +10,7 @@
     "version": {
         "Major": 0,
         "Minor": 6,
-        "Patch": 35
+        "Patch": 47
     },
     "groups": [
         {
@@ -127,6 +127,15 @@
             "defaultValue": "sysdig-inline-scan-result.json",
             "required": false,
             "helpMarkDown": "What file to export the result to. It will be ignored if jsonOutput is false",
+            "groupName": "overrides"
+        },
+        {
+            "name": "autoPublishArtifacts",
+            "type": "boolean",
+            "label": "Wether to publish the JSON output file as a build artifact. If jsonOutput is false, this will be ignored",
+            "defaultValue": "false",
+            "required": false,
+            "helpMarkDown": "Wether to publish the JSON output file as a build artifact. If jsonOutput is false, this will be ignored",
             "groupName": "overrides"
         }
     ],
