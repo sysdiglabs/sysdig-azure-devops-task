@@ -8,12 +8,10 @@ all: build
 build: 
 	cd $(TYPESCRIPT_SOURCE) && tsc
 
-# Run the application
 publish: build
 	chmod +x $(HOME)/bump_version.sh
 	$(HOME)/bump_version.sh
-	tfx extension publish \ 
-	 --manifest-globs $(HOME)/vss-extension.json \
+	tfx extension publish --manifest-globs $(HOME)/vss-extension.json \
 	 --token $(AZURE_DEVOPS_ACCESS_TOKEN)
 
 .PHONY: build publish

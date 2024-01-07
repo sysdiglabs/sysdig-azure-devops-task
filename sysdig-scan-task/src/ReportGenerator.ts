@@ -44,29 +44,35 @@ function getMaxCvssScore(pkg: Package): number {
 export function generateHTMLTableFromSysdigJSON(jsonData: SysdigScan): string {
     // Styling for the tables
     let styles = `
-        <style>
-            table {
-                width: 100%;
-                border-collapse: collapse;
-                margin-bottom: 20px;
-            }
-            th, td {
-                border: 1px solid #ddd;
-                padding: 8px;
-                text-align: left;
-            }
-            th {
-                background-color: #f2f2f2;
-                color: black;
-            }
-            tr:nth-child(even) {
-                background-color: #f9f9f9;
-            }
-            tr:hover {
-                background-color: #f1f1f1;
-            }
-        </style>
-    `;
+    <style>
+        table {
+            width: 100%;
+            border-collapse: separate; /* Use 'separate' to allow spacing between cells */
+            border-spacing: 0 10px; /* Adds spacing between rows */
+            margin-bottom: 20px;
+            font-size: 16px; /* Larger font size for readability */
+            font-family: Arial, sans-serif; /* A clean, modern font */
+        }
+        th, td {
+            border: 1px solid #ccc; /* Lighter border color */
+            padding: 12px 15px; /* Increased padding for space */
+            text-align: left;
+            background-color: white; /* White background for cells */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+        }
+        th {
+            background-color: #4CAF50; /* More vibrant header color */
+            color: white; /* White text for contrast */
+            font-weight: bold; /* Bold font for headers */
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2; /* Alternating row color for better distinction */
+        }
+        tr:hover {
+            background-color: #e8e8e8; /* Hover color for interactivity */
+        }
+    </style>
+`;
 
     // Table for vulnTotalBySeverity
     let vulnTotalTable = `
