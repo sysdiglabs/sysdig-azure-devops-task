@@ -6,7 +6,7 @@ import { InputFetch } from './InputFetch';
 import { downloadFile, getVersion, filePermission } from './Download';
 
 export async function getScanningEngine(): Promise<string> {
-  console.log("[INFO] Downloading Sysdig Scanning Engine (Tech Preview)");
+  console.log("[INFO] Downloading Sysdig Scanning Engine");
 
   const version: string = getVersion();
   var strUrl = `https://download.sysdig.com/scanning/bin/sysdig-cli-scanner/${version}/linux/amd64/sysdig-cli-scanner`;

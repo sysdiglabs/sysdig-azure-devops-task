@@ -40,10 +40,6 @@ export class InputFetch {
         return this.fetchString('internalRegistry', false);
     }
 
-    get techpreview(): boolean {
-        return tl.getBoolInput('techPreview');
-    }
-
     get jsonOutput(): boolean {
         return tl.getBoolInput('jsonOutput');
     }

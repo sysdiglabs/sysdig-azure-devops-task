@@ -1,16 +1,16 @@
 {
     "$schema": "https://raw.githubusercontent.com/Microsoft/azure-pipelines-task-lib/master/tasks.schema.json",
     "id": "5e925c66-5756-4f05-9238-258072d441c3",
-    "name": "Sysdig-Inline-Scan",
-    "friendlyName": "Sysdig Secure Image Scanning",
-    "description": "Scan images with Sysdig Secure as part of your development pipeline.",
+    "name": "Sysdig-CLI-Scan",
+    "friendlyName": "Sysdig CLI scanner",
+    "description": "Scan images and infrastructure as code with Sysdig Secure as part of your development pipeline.",
     "helpMarkDown": "",
     "category": "Utility",
     "author": "Sysdig",
     "version": {
-        "Major": 0,
-        "Minor": 6,
-        "Patch": 47
+        "Major": 1,
+        "Minor": 0,
+        "Patch": 0
     },
     "groups": [
         {
@@ -100,15 +100,6 @@
             "defaultValue": false,
             "required": false,
             "helpMarkDown": "Docker options maybe required depending on the access permissions for /var/run/docker.sock",
-            "groupName": "overrides"
-        },
-        {
-            "name": "techPreview",
-            "type": "boolean",
-            "label": "Sysdig Scanning Engine (Tech Preview)",
-            "defaultValue": false,
-            "required": false,
-            "helpMarkDown": "Use Sysdig Scanning Engine (Tech Preview) - https://docs.sysdig.com/en/docs/sysdig-secure/scanning/new-scanning-engine/",
             "groupName": "overrides"
         },
         {
