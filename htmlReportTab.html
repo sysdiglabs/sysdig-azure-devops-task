@@ -8,13 +8,40 @@
 
     <!-- <script src="https://cdn.vsassets.io/v/M165_20210910.4/_scripts/TFS/min/VSS.SDK.min.js"></script> -->
     <style>
+        body {
+            font-family: Arial, sans-serif; /* Change the font family */
+            background-color: #f4f4f4; /* Background color of the page */
+        }
+
         #htmlContent {
-            max-height: 500px; /* Adjust the height as needed */
-            overflow: auto; /* Enables scrolling */
+            max-height: 500px; 
+            overflow: auto; 
             padding: 10px;
-            border: 1px solid #ccc; /* Optional: adds a border */
-            margin: 10px;
-            font-size: 0.9em; /* Optional: adjust font size */
+            border: 1px solid #ccc; 
+            margin: 10px 10px 30px 10px; /* Added space at the bottom */
+            font-size: 0.9em; 
+            background-color: #fff; /* Background color of the table */
+            color: #333; /* Text color */
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); /* Optional: adds shadow for depth */
+        }
+
+        table {
+            border-collapse: collapse; /* Optional: for table styling */
+            width: 100%; /* Optional: for table styling */
+        }
+
+        th, td {
+            text-align: left; /* Optional: aligns text to the left in table cells */
+            padding: 8px; /* Optional: adds padding inside table cells */
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2; /* Optional: zebra striping for table rows */
+        }
+
+        th {
+            background-color: #4CAF50; /* Header background color */
+            color: white; /* Header text color */
         }
     </style>
 </head>

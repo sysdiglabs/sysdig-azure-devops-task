@@ -1,113 +1,113 @@
 {
-    "manifestVersion": 1,
-    "id": "sysdig-scan-task",
-    "name": "Sysdig CLI scanner",
-    "version": "1.0.0",
-    "publisher": "IgorEulalio",
-    "description": "Scan images with Sysdig Secure as part of your development pipeline.",
-    "public": true,
-    "galleryFlags": [
-        "Preview"
-    ],
-    "targets": [
-        {
-            "id": "Microsoft.VisualStudio.Services"
-        }
-    ],
-    "icons": {
-        "default": "images/sysdig.png"
+  "manifestVersion": 1,
+  "id": "sysdig-scan-task",
+  "name": "Sysdig CLI scanner",
+  "version": "1.0.1",
+  "publisher": "IgorEulalio",
+  "description": "Scan images with Sysdig Secure as part of your development pipeline.",
+  "public": true,
+  "galleryFlags": [
+    "Preview"
+  ],
+  "targets": [
+    {
+      "id": "Microsoft.VisualStudio.Services"
+    }
+  ],
+  "icons": {
+    "default": "images/sysdig.png"
+  },
+  "categories": [
+    "Azure Pipelines"
+  ],
+  "branding": {
+    "color": "rgb(255, 255, 255)",
+    "theme": "light"
+  },
+  "content": {
+    "details": {
+      "path": "README.md"
     },
-    "categories": [
-        "Azure Pipelines"
-    ],
-    "branding": {
-        "color": "rgb(255, 255, 255)",
-        "theme": "light"
+    "license": {
+      "path": "license-terms.md"
+    }
+  },
+  "tags": [
+    "Container",
+    "Security",
+    "Scanning"
+  ],
+  "scopes": [
+    "vso.build_execute",
+    "vso.release_execute"
+  ],
+  "links": {
+    "home": {
+      "uri": "https://sysdig.com/"
     },
-    "content": {
-        "details": {
-            "path": "README.md"
-        },
-        "license": {
-            "path": "license-terms.md"
-        }
+    "getstarted": {
+      "uri": "https://docs.sysdig.com/en/integrate-with-ci-cd-tools.html"
     },
-    "tags": [
-        "Container",
-        "Security",
-        "Scanning"
-    ],
-    "scopes": [
-        "vso.build_execute",
-        "vso.release_execute"
-    ],
-    "links": {
-        "home": {
-            "uri": "https://sysdig.com/"
-        },
-        "getstarted": {
-            "uri": "https://docs.sysdig.com/en/integrate-with-ci-cd-tools.html"
-        },
-        "learn": {
-            "uri": "https://docs.sysdig.com/en/release-notes.html"
-        },
-        "privacypolicy": {
-            "uri": "https://sysdig.com/privacy-policy/"
-        },
-        "support": {
-            "uri": "https://sysdig.com/support/submit-ticket/"
-        }
+    "learn": {
+      "uri": "https://docs.sysdig.com/en/release-notes.html"
     },
-    "contributions": [
-        {
-            "id": "sysdig-scan-task",
-            "type": "ms.vss-distributed-task.task",
-            "targets": [
-                "ms.vss-distributed-task.tasks"
-            ],
-            "properties": {
-                "name": "sysdig-scan-task",
-                "iconAsset": "IgorEulalio.sysdig-scan-task/images/sysdig.png",
-                "includesData": {
-                    "assets": [
-                        "IgorEulalio.sysdig-scan-task/images/sysdig.png"
-                    ]
-                }
-            }
-        },
-        {
-            "id": "sysdig-html-tab",
-            "type": "ms.vss-build-web.build-results-tab",
-            "targets": [
-                "ms.vss-build-web.build-results-view"
-            ],
-            "properties": {
-                "name": "HTML Report",
-                "uri": "htmlReportTab.html"
-            }
+    "privacypolicy": {
+      "uri": "https://sysdig.com/privacy-policy/"
+    },
+    "support": {
+      "uri": "https://sysdig.com/support/submit-ticket/"
+    }
+  },
+  "contributions": [
+    {
+      "id": "sysdig-scan-task",
+      "type": "ms.vss-distributed-task.task",
+      "targets": [
+        "ms.vss-distributed-task.tasks"
+      ],
+      "properties": {
+        "name": "sysdig-scan-task",
+        "iconAsset": "IgorEulalio.sysdig-scan-task/images/sysdig.png",
+        "includesData": {
+          "assets": [
+            "IgorEulalio.sysdig-scan-task/images/sysdig.png"
+          ]
         }
-    ],
-    "files": [
-        {
-            "path": "sysdig-scan-task"
-        },
-        {
-            "path": "images/sysdig.png",
-            "addressable": true
-        },
-        {
-            "path": "htmlReportTab.html",
-            "addressable": true
-        },
-        {
-            "path": "node_modules/vss-web-extension-sdk/lib",
-            "addressable": true,
-            "packagePath": "lib"
-        },
-        {
-            "path": "sysdig-scan-task/node_modules",
-            "addressable": true,
-            "packagePath": "lib"
-        }
-    ]
+      }
+    },
+    {
+      "id": "sysdig-html-tab",
+      "type": "ms.vss-build-web.build-results-tab",
+      "targets": [
+        "ms.vss-build-web.build-results-view"
+      ],
+      "properties": {
+        "name": "HTML Report",
+        "uri": "htmlReportTab.html"
+      }
+    }
+  ],
+  "files": [
+    {
+      "path": "sysdig-scan-task"
+    },
+    {
+      "path": "images/sysdig.png",
+      "addressable": true
+    },
+    {
+      "path": "htmlReportTab.html",
+      "addressable": true
+    },
+    {
+      "path": "node_modules/vss-web-extension-sdk/lib",
+      "addressable": true,
+      "packagePath": "lib"
+    },
+    {
+      "path": "sysdig-scan-task/node_modules",
+      "addressable": true,
+      "packagePath": "lib"
+    }
+  ]
 }

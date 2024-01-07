@@ -1,14 +1,19 @@
-TYPESCRIPT_SOURCE:= $(pwd)/sysdig-scan-task/
-HOME:= $(pwd)
+HOME := $(CURDIR)
+TYPESCRIPT_SOURCE := $(HOME)/sysdig-scan-task/
+AZURE_DEVOPS_ACCESS_TOKEN ?=
+
 # Default target
 all: build
 
 build: 
 	cd $(TYPESCRIPT_SOURCE) && tsc
 
-
 # Run the application
 publish: build
-	node $(DIST_DIR)/app.js
+	chmod +x $(HOME)/bump_version.sh
+	$(HOME)/bump_version.sh
+	tfx extension publish \ 
+	 --manifest-globs $(HOME)/vss-extension.json \
+	 --token $(AZURE_DEVOPS_ACCESS_TOKEN)
 
-.PHONY: all install build clean run
+.PHONY: build publish
