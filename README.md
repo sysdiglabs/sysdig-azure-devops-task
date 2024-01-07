@@ -58,29 +58,48 @@ The below provides an example of a local image build which integrates with Sysdi
 to scan the image. It will also fail the build if the Sysdig Secure policy scan returns a `fail` result.
 
 ```
+trigger:
+- master
+
 pool:
-  vmImage: 'ubuntu-latest'
+  vmImage: ubuntu-latest
 
 variables:
-  imageName: 'docker.io/sysdigdan/dummy-vuln-app'
-  tags: |
-    latest
+- name: imageName
+  value: 'nginx:latest'
+  readonly: true
+- group: sysdig
+
 steps:
-- bash: echo "Hello world"
-
-- task: Docker@2
-  displayName: Build image
+- task: DockerInstaller@0
   inputs:
-    repository: $(imageName)
-    command: build
-    tags: $(tags)
+    dockerVersion: '17.09.0-ce'
 
-- task: Sysdig@0
-  displayName: Sysdig Image Scan
+- script:  docker pull $(imageName)
+  ## workingDirectory: $(Build.SourcesDirectory)/front-end/myAppFront/
+  displayName: 'Docker Pull'
+
+- task: Sysdig-CLI-Scan@1
   inputs:
-    apikey: '$(secureApiKey)'
-    image: '$(imageName):$(tags)'
-    failBuild: true
+    sysdigurl: 'https://app.us4.sysdig.com'
+    apikey: $(SECURE_ACCESS_TOKEN)
+    image: $(imageName)
+    verbose: true
+    jsonOutput: true
+    jsonOutputFile: 'sysdig-inline-scan-result.json'
+
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(System.DefaultWorkingDirectory)/output.html' # Path to the file or folder
+    ArtifactName: 'html_report' # Name of the artifact
+    publishLocation: 'Container' # Options: container, filePath
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(System.DefaultWorkingDirectory)/sysdig-inline-scan-result.json' # Path to the file or folder
+    ArtifactName: 'json_report' # Name of the artifact
+    publishLocation: 'Container' # Options: container, filePath
 ```
 
 ## More Information
