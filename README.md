@@ -87,7 +87,7 @@ steps:
     verbose: true
     jsonOutput: true
     jsonOutputFile: 'sysdig-inline-scan-result.json'
-
+xx
 
 - task: PublishBuildArtifacts@1
   inputs:
