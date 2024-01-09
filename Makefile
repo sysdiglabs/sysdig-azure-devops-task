@@ -1,6 +1,6 @@
 HOME := $(CURDIR)
 TYPESCRIPT_SOURCE := $(HOME)/sysdig-scan-task/
-export 
+# AZURE_DEVOPS_ACCESS_TOKEN ?=
 
 # Default target
 all: build
