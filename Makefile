@@ -6,7 +6,8 @@ AZURE_DEVOPS_ACCESS_TOKEN ?=
 all: build
 
 build: 
-	cd $(TYPESCRIPT_SOURCE) && tsc
+	npm install
+	cd $(TYPESCRIPT_SOURCE) && npm install && tsc
 
 publish: build
 	chmod +x $(HOME)/bump_version.sh
