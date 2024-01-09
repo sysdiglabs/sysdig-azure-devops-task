@@ -1,6 +1,6 @@
 HOME := $(CURDIR)
 TYPESCRIPT_SOURCE := $(HOME)/sysdig-scan-task/
-AZURE_DEVOPS_ACCESS_TOKEN ?=
+export 
 
 # Default target
 all: build
@@ -9,9 +9,10 @@ build:
 	npm install
 	cd $(TYPESCRIPT_SOURCE) && npm install && tsc
 
-publish: build
+publish: 
 	chmod +x $(HOME)/bump_version.sh
 	$(HOME)/bump_version.sh
+	export AZURE_DEVOPS_ACCESS_TOKEN = $(AZURE_DEVOPS_ACCESS_TOKEN)
 	tfx extension publish --manifest-globs $(HOME)/vss-extension.json \
 	 --token $(AZURE_DEVOPS_ACCESS_TOKEN)
 
