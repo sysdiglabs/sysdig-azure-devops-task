@@ -12,7 +12,6 @@ build:
 publish: 
 	chmod +x $(HOME)/bump_version.sh
 	$(HOME)/bump_version.sh
-	export AZURE_DEVOPS_ACCESS_TOKEN = $(AZURE_DEVOPS_ACCESS_TOKEN)
 	tfx extension publish --manifest-globs $(HOME)/vss-extension.json \
 	 --token $(AZURE_DEVOPS_ACCESS_TOKEN)
 
