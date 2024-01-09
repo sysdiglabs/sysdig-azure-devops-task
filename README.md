@@ -28,11 +28,11 @@ the Sysdig Secure policy scan.
 Example yaml:
 
 ```
-- task: Sysdig@0
-  displayName: Sysdig Image Scan
+- task: Sysdig-CLI-Scan@1
   inputs:
-    apikey: '$(secureApiKey)'
-    image: '$(imageName):$(tags)'
+    sysdigurl: 'https://app.us4.sysdig.com'
+    apikey: $(SECURE_ACCESS_TOKEN)
+    image: $(imageName)
 ```
 
 
@@ -44,11 +44,12 @@ results of the Sysdig Secure scan, set the `failBuild` option to `true`.
 Example yaml:
 
 ```
-- task: Sysdig@0
-  displayName: Sysdig Image Scan
+- task: Sysdig-CLI-Scan@1
   inputs:
-    apikey: '$(secureApiKey)'
-    image: '$(imageName):$(tags)'
+    sysdigurl: 'https://app.us4.sysdig.com'
+    apikey: $(SECURE_ACCESS_TOKEN)
+    image: $(imageName)
+    verbose: true
     failBuild: true
 ```
 
@@ -87,7 +88,6 @@ steps:
     verbose: true
     jsonOutput: true
     jsonOutputFile: 'sysdig-inline-scan-result.json'
-xx
 
 - task: PublishBuildArtifacts@1
   inputs:
