@@ -7,7 +7,6 @@ on:
 
 permissions:
   contents: read
-  secrets: read
 
 jobs:
   build:
@@ -28,12 +27,12 @@ jobs:
         npm install -g typescript
     
     - name: Build release
-      env:
-        AZURE_DEVOPS_ACCESS_TOKEN: ${{ secrets.AZURE_DEVOPS_ACCESS_TOKEN }}
       run: |
         make build
 
         
     - name: Publish release
+      env:
+        AZURE_DEVOPS_ACCESS_TOKEN: ${{ secrets.AZURE_DEVOPS_ACCESS_TOKEN }}
       run: |
         make publish
