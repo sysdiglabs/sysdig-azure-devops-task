@@ -3,7 +3,7 @@
   "id": "sysdig-scan-task",
   "name": "Sysdig CLI scanner",
   "version": "1.0.3",
-  "publisher": "IgorEulalio",
+  "publisher": "SysdigDevOps",
   "description": "Scan images with Sysdig Secure as part of your development pipeline.",
   "public": true,
   "galleryFlags": [
@@ -67,10 +67,10 @@
       ],
       "properties": {
         "name": "sysdig-scan-task",
-        "iconAsset": "IgorEulalio.sysdig-scan-task/images/sysdig.png",
+        "iconAsset": "SysdigDevOps.sysdig-scan-task/images/sysdig.png",
         "includesData": {
           "assets": [
-            "IgorEulalio.sysdig-scan-task/images/sysdig.png"
+            "SysdigDevOps.sysdig-scan-task/images/sysdig.png"
           ]
         }
       }
