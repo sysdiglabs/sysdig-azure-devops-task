@@ -60,13 +60,13 @@
   },
   "contributions": [
     {
-      "id": "sysdig-scan-task",
+      "id": "sysdig-scan-task-devops",
       "type": "ms.vss-distributed-task.task",
       "targets": [
         "ms.vss-distributed-task.tasks"
       ],
       "properties": {
-        "name": "sysdig-scan-task",
+        "name": "sysdig-scan-task-devops",
         "iconAsset": "SysdigDevOps.sysdig-scan-task/images/sysdig.png",
         "includesData": {
           "assets": [
