@@ -7,6 +7,7 @@ on:
 
 permissions:
   contents: read
+  id-token: write
 
 jobs:
   build:
@@ -25,12 +26,23 @@ jobs:
       run: |
         npm install -g tfx-cli
         npm install -g typescript
-    
+
+    - name: Login to Azure DevOps
+      uses: azure/login@v1
+      with:
+        client-id: ${{ secrets.AZURE_APPLICATION_CLIENT_ID }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+    - name: Get Azure DevOps access token
+      id: get_token
+      run: |
+        echo "AZURE_DEVOPS_ACCESS_TOKEN=$(az account get-access-token --resource ${{ secrets.AZURE_MARKETPLACE_ACCESS_SCOPE }} --query accessToken -o tsv)" >> $GITHUB_ENV
+
     - name: Build release
       run: |
         make build
 
-        
     - name: Publish release
       env:
         AZURE_DEVOPS_ACCESS_TOKEN: ${{ secrets.AZURE_DEVOPS_ACCESS_TOKEN }}
