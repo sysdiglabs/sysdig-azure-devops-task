@@ -52,6 +52,10 @@ export class InputFetch {
         return tl.getBoolInput('autoPublishArtifacts', false);
     }
 
+    get sysdigCliScannerVersion(): string {
+        return this.fetchString('sysdigCliScannerVersion', false);
+    }
+
     private error(input: string, required: boolean): string {
         if (required) {
             tl.setResult(tl.TaskResult.Failed, input.toUpperCase().concat(' fetch failed.'));
