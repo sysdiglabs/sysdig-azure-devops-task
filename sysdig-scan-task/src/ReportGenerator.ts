@@ -11,6 +11,15 @@ interface ScanResult {
         negligible: number;
     }
     packages: Package[];
+    type: string;
+    metadata: {
+        imageId: string;
+        pullString: string;
+        digest: string;
+        baseOs: number;
+        layersCount: string;
+    };
+    exploitsCount: number;
 }
 
 interface Package {
@@ -54,7 +63,7 @@ export function generateHTMLTableFromSysdigJSON(jsonData: SysdigScan): string {
     let styles = generateStyles();
 
     // Page Heading
-    let heading = generateHeading();
+    let heading = generateHeading(jsonData.result.metadata.pullString);
 
     // Table for vulnTotalBySeverity
     let vulnTotalTable = generateVulnTotalTable(jsonData.result.vulnTotalBySeverity);
@@ -107,9 +116,9 @@ function generateStyles(): string {
     `;
 }
 
-function generateHeading(): string {
+function generateHeading(imageName: string): string {
     return `
-    <h1> Image: <imagenamehere> </h1>
+    <h1> Image: ${imageName} </h1>
         `
     }
 
@@ -173,10 +182,9 @@ function generatePackagesTable(packages: Package[]): string {
         }
     }
 
-    const sortedVulnPackages = vulnPackages.sort((a, b) => Number(b.cvssScore) - Number(a.cvssScore));
-
+    const sortedVulnPackages = sortVulnPackages(vulnPackages);
+    
     sortedVulnPackages.forEach((vuln: EnrichedVulnInfo) => {
-        console.log("Enriched vuln: ", vuln);
         var suggestedFixFormat = vuln.fix_version == 'undefined' ? vuln.fix_version : "N/A";
             packagesTable += `<tr>
                     <td>${vuln.name}</td>
@@ -192,4 +200,23 @@ function generatePackagesTable(packages: Package[]): string {
     });
 
     return packagesTable;
+}
+
+function sortVulnPackages(vulnPackages: EnrichedVulnInfo[]): EnrichedVulnInfo[] {
+    const order = ['critical', 'high', 'medium', 'low', 'negligible'];
+    return vulnPackages.sort((a, b) => {
+        const severityIndexA = order.indexOf(a.severity.toLowerCase());
+        const severityIndexB = order.indexOf(b.severity.toLowerCase());
+
+        console.log(`Comparing: ${a.severity} (${severityIndexA}) vs ${b.severity} (${severityIndexB})`);
+
+        if (severityIndexA > severityIndexB) {
+            return 1;
+        } else if (severityIndexA < severityIndexB) {
+            return -1;
+        } else {
+            // Sorting by CVSS score in descending order when severities are the same
+            return b.cvssScore - a.cvssScore;
+        }
+    });
 }
