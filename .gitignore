@@ -1,4 +1,7 @@
 *.vsix
 *.js
+.taskkey
 .dccache
 node_modules/
+output.html
+.npm

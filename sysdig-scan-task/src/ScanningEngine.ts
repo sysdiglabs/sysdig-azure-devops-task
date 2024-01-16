@@ -6,9 +6,18 @@ import { InputFetch } from './InputFetch';
 import { downloadFile, getVersion, filePermission } from './Download';
 
 export async function getScanningEngine(): Promise<string> {
-  console.log("[INFO] Downloading Sysdig Scanning Engine");
+  const fetch: InputFetch = new InputFetch();
 
-  const version: string = getVersion();
+  let version: string;
+
+  if (fetch.sysdigCliScannerVersion != "latest") {
+    version = fetch.sysdigCliScannerVersion;
+  }
+  else {
+    version = getVersion();
+  }
+
+  console.log("[INFO] Downloading Sysdig Scanning Engine. Version: ", version);
   var strUrl = `https://download.sysdig.com/scanning/bin/sysdig-cli-scanner/${version}/linux/amd64/sysdig-cli-scanner`;
 
   var strTargetFilename = 'sysdig-cli-scanner';
@@ -51,8 +60,12 @@ export function buildScanningEngineArg(binaryPath: string): tr.ToolRunner {
   if (fetch.verbose) {
     scanningEngine.arg('--loglevel=debug');
     scanningEngine.arg('--console-log');
-    scanningEngine.arg('--full-vulns-table');
   }
+
+  // Set log level to debug
+    if (fetch.fullVulnsTable) {
+      scanningEngine.arg('--full-vulns-table');
+    }
 
   // Skip TLS verification on Sysdig enpoints
   if (fetch.skipTLS) {

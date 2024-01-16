@@ -1,6 +1,6 @@
 {
   "$schema": "https://raw.githubusercontent.com/Microsoft/azure-pipelines-task-lib/master/tasks.schema.json",
-  "id": "5e925c66-5756-4f05-9238-258072d441c3",
+  "id": "a52fe4a2-0476-4973-bc50-cc44e9032e78",
   "name": "Sysdig-CLI-Scan",
   "friendlyName": "Sysdig CLI scanner",
   "description": "Scan images and infrastructure as code with Sysdig Secure as part of your development pipeline.",
@@ -8,14 +8,14 @@
   "category": "Utility",
   "author": "Sysdig",
   "version": {
-    "Major": 1,
+    "Major": 0,
     "Minor": 0,
-    "Patch": 3
+    "Patch": 0
   },
   "groups": [
     {
       "name": "overrides",
-      "displayName": "Override Sysdig Defaults",
+      "displayName": "Additional Options",
       "isExpanded": false
     }
   ],
@@ -47,26 +47,18 @@
     {
       "name": "image",
       "type": "string",
-      "label": "Full Image Tag",
+      "label": "Full Image Tag to Scan",
       "defaultValue": "$(imageName):$(tag)",
       "required": true,
       "helpMarkDown": "Image to be scanned <repo/image:tag>."
     },
     {
-      "name": "malware",
-      "type": "boolean",
-      "label": "Enable Malware Scanning",
-      "defaultValue": false,
-      "required": false,
-      "helpMarkDown": "Perform Inline Malware Scanning."
-    },
-    {
       "name": "failBuild",
       "type": "boolean",
-      "label": "Fail the build on policy evaulation",
+      "label": "Fail build if policy evaluation fails.",
       "defaultValue": false,
       "required": false,
-      "helpMarkDown": "Fail the build if policy evaluation returns a fail."
+      "helpMarkDown": "Fail the build if policy evaluation fails."
     },
     {
       "name": "skipTLS",
@@ -74,7 +66,8 @@
       "label": "Skip TLS verification",
       "defaultValue": false,
       "required": false,
-      "helpMarkDown": "Skip TLS verification when calling Sysdig endpoints."
+      "helpMarkDown": "Skip TLS verification when calling Sysdig endpoints.",
+      "groupName": "overrides"
     },
     {
       "name": "verbose",
@@ -82,41 +75,33 @@
       "label": "Verbose logging output",
       "defaultValue": false,
       "required": false,
-      "helpMarkDown": "More verbose logging output from the Sysdig Inline Scanner."
-    },
-    {
-      "name": "internalRegistry",
-      "type": "string",
-      "label": "Sysdig Inline Scanning Image (registry/repo/image:tag)",
-      "defaultValue": "",
-      "required": false,
-      "helpMarkDown": "Pull Sysdig Inline Scanning image from custom registry. Supported image must be used (quay.io/sysdig/secure-inline-scan)",
+      "helpMarkDown": "More verbose logging output from the Sysdig CLI Scanner.",
       "groupName": "overrides"
     },
     {
-      "name": "privileged",
+      "name": "fullVulnsTable",
       "type": "boolean",
-      "label": "Enable User Root and Privileged Mode",
+      "label": "Output full vulnerability table",
       "defaultValue": false,
       "required": false,
-      "helpMarkDown": "Docker options maybe required depending on the access permissions for /var/run/docker.sock",
+      "helpMarkDown": "Outputs the full vulnerability table in the console output.",
       "groupName": "overrides"
     },
     {
       "name": "jsonOutput",
       "type": "boolean",
       "label": "JSON output of the result",
-      "defaultValue": false,
+      "defaultValue": true,
       "required": false,
-      "helpMarkDown": "Export JSON result file to $(System.DefaultWorkingDirectory)/sysdig-inline-scan-result.json",
+      "helpMarkDown": "Export JSON result file to $(System.DefaultWorkingDirectory)/sysdig-cli-scan-output.json",
       "groupName": "overrides"
     },
     {
       "name": "jsonOutputFile",
       "type": "string",
       "label": "JSON output file of the result. It will be ignored if jsonOutput is false",
-      "defaultValue": "sysdig-inline-scan-result.json",
-      "required": false,
+      "defaultValue": "sysdig-cli-scan-output.json",
+      "required": true,
       "helpMarkDown": "What file to export the result to. It will be ignored if jsonOutput is false",
       "groupName": "overrides"
     },
@@ -127,6 +112,15 @@
       "defaultValue": "false",
       "required": false,
       "helpMarkDown": "Wether to publish the JSON output file as a build artifact. If jsonOutput is false, this will be ignored",
+      "groupName": "overrides"
+    },
+    {
+      "name": "sysdigCliScannerVersion",
+      "type": "string",
+      "label": "Version of the Sysdig CLI Scanner to use. Latest will be used if not specified",
+      "defaultValue": "latest",
+      "required": false,
+      "helpMarkDown": "Version of the Sysdig CLI Scanner to use. Latest will be used if not specified",
       "groupName": "overrides"
     }
   ],

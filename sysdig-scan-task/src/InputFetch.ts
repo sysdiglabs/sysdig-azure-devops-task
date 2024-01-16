@@ -20,6 +20,10 @@ export class InputFetch {
         return tl.getBoolInput('verbose');
     }
 
+    get fullVulnsTable(): boolean {
+        return tl.getBoolInput('fullVulnsTable');
+    }
+
     get privileged(): boolean {
         return tl.getBoolInput('privileged');
     }
@@ -50,6 +54,10 @@ export class InputFetch {
 
     get autoPublishArtifacts(): boolean {
         return tl.getBoolInput('autoPublishArtifacts', false);
+    }
+
+    get sysdigCliScannerVersion(): string {
+        return this.fetchString('sysdigCliScannerVersion', false);
     }
 
     private error(input: string, required: boolean): string {
