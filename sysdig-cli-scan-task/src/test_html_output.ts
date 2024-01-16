@@ -1,4 +1,4 @@
-// ts-node sysdig-scan-task/src/test.ts
+// ts-node sysdig-cli-scan-task/src/test.ts
 
 import fs = require('fs');
 
