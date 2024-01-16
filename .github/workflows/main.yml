@@ -43,8 +43,25 @@ jobs:
       run: |
         make build
 
+    - name: Increment version
+      run: |
+        chmod +x ./bump_version.sh
+        NEW_VERSION=$(./bump_version.sh)
+        echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
+
     - name: Publish release
       env:
         AZURE_DEVOPS_ACCESS_TOKEN: ${{ env.AZURE_DEVOPS_ACCESS_TOKEN }}
       run: |
         make publish
+
+    - name: Commit version increment
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add ./sysdig-cli-scan-task/task.json
+        git add ./VERSION
+        git add ./vss-extension.json
+        git commit -m "Increment version to ${{ env.NEW_VERSION }}"
+        git tag ${{ env.NEW_VERSION }}
+        git push origin HEAD --tags

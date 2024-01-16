@@ -31,3 +31,6 @@ jq --arg major "$major" \
    vss-extension.json > tmp.json && mv tmp.json vss-extension.json
 
 echo "Version updated to $new_version"
+
+# Output the new version for use in other scripts (like GitHub Actions)
+echo $new_version
