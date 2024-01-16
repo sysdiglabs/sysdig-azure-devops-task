@@ -8,9 +8,9 @@
   "category": "Utility",
   "author": "Sysdig",
   "version": {
-    "Major": 1,
+    "Major": 0,
     "Minor": 0,
-    "Patch": 28
+    "Patch": 0
   },
   "groups": [
     {

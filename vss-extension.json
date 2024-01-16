@@ -2,8 +2,8 @@
   "manifestVersion": 1,
   "id": "sysdig-scan-task",
   "name": "Sysdig CLI scanner",
-  "version": "1.0.28",
-  "publisher": "IgorEulalio",
+  "version": "0.0.0",
+  "publisher": "SysdigDevOps",
   "description": "Scan images with Sysdig Secure as part of your development pipeline.",
   "public": true,
   "galleryFlags": [
@@ -60,17 +60,17 @@
   },
   "contributions": [
     {
-      "id": "sysdig-scan-task",
+      "id": "sysdig-scan-task-devops",
       "type": "ms.vss-distributed-task.task",
       "targets": [
         "ms.vss-distributed-task.tasks"
       ],
       "properties": {
         "name": "sysdig-scan-task",
-        "iconAsset": "IgorEulalio.sysdig-scan-task/images/sysdig.png",
+        "iconAsset": "SysdigDevOps.sysdig-scan-task/images/sysdig.png",
         "includesData": {
           "assets": [
-            "IgorEulalio.sysdig-scan-task/images/sysdig.png"
+            "SysdigDevOps.sysdig-scan-task/images/sysdig.png"
           ]
         }
       }
@@ -82,7 +82,7 @@
         "ms.vss-build-web.build-results-view"
       ],
       "properties": {
-        "name": "Sysdig Vuln Report",
+        "name": "HTML Report",
         "uri": "htmlReportTab.html"
       }
     }
