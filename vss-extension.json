@@ -1,6 +1,6 @@
 {
   "manifestVersion": 1,
-  "id": "sysdig-scan-task",
+  "id": "sysdig-cli-scan-task",
   "name": "Sysdig CLI scanner",
   "version": "0.0.0",
   "publisher": "SysdigDevOps",
@@ -57,17 +57,17 @@
   },
   "contributions": [
     {
-      "id": "sysdig-scan-task-devops",
+      "id": "sysdig-cli-scan-task",
       "type": "ms.vss-distributed-task.task",
       "targets": [
         "ms.vss-distributed-task.tasks"
       ],
       "properties": {
-        "name": "sysdig-scan-task",
-        "iconAsset": "SysdigDevOps.sysdig-scan-task/images/sysdig.png",
+        "name": "sysdig-cli-scan-task",
+        "iconAsset": "SysdigDevOps.sysdig-cli-scan-task/images/sysdig.png",
         "includesData": {
           "assets": [
-            "SysdigDevOps.sysdig-scan-task/images/sysdig.png"
+            "SysdigDevOps.sysdig-cli-scan-task/images/sysdig.png"
           ]
         }
       }
