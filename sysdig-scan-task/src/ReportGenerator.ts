@@ -53,38 +53,49 @@ export function generateHTMLTableFromSysdigJSON(jsonData: SysdigScan): string {
     // Styles for the HTML report
     let styles = generateStyles();
 
+    // Page Heading
+    let heading = generateHeading();
+
     // Table for vulnTotalBySeverity
     let vulnTotalTable = generateVulnTotalTable(jsonData.result.vulnTotalBySeverity);
 
     // Table for packages
     let packagesTable = generatePackagesTable(jsonData.result.packages);
 
-return styles + vulnTotalTable + packagesTable;
+return styles + heading + vulnTotalTable + packagesTable;
 }
+
 
 function generateStyles(): string {
     return `
     <style>
+        h1 {
+            color: #1E1E22;
+            font-family: Arial, sans-serif; /* A clean, modern font */
+            text-align: center;
+        }
         table {
             width: 100%;
-            border-collapse: separate; /* Use 'separate' to allow spacing between cells */
-            border-spacing: 0 10px; /* Adds spacing between rows */
+            background-color: white;
+            #border-collapse: separate; /* Use 'separate' to allow spacing between cells */
+            border-spacing: 0 2px; /* Adds spacing between rows */
             margin-bottom: 20px;
             overflow: auto;
-            font-size: 16px; /* Larger font size for readability */
+            font-size: 12px;
             font-family: Arial, sans-serif; /* A clean, modern font */
+            color: #3E4042; # Text Colour
         }
         th, td {
             border: 1px solid #ccc; /* Lighter border color */
-            padding: 12px 15px; /* Increased padding for space */
+            padding: 5px 5px; /* Increased padding for space */
             text-align: left;
-            background-color: white; /* White background for cells */
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+            #background-color: #3E4042;
+            #box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
         }
         th {
-            background-color: #4CAF50; /* More vibrant header color */
-            color: white; /* White text for contrast */
-            font-weight: bold; /* Bold font for headers */
+            background-color: #BDF78B; /* More vibrant header color */
+            color: #1E1E22; 
+            font-weight: bold; 
         }
         tr:nth-child(even) {
             background-color: #f2f2f2; /* Alternating row color for better distinction */
@@ -96,24 +107,31 @@ function generateStyles(): string {
     `;
 }
 
+function generateHeading(): string {
+    return `
+    <h1> Image: <imagenamehere> </h1>
+        `
+    }
+
 function generateVulnTotalTable(vulnTotalBySeverity: ScanResult['vulnTotalBySeverity']): string {
     return `
-        <table>
-            <tr>
-                <th>Critical</th>
-                <th>High</th>
-                <th>Medium</th>
-                <th>Low</th>
-                <th>Negligible</th>
-            </tr>
-            <tr>
-                <td>${vulnTotalBySeverity.critical}</td>
-                <td>${vulnTotalBySeverity.high}</td>
-                <td>${vulnTotalBySeverity.medium}</td>
-                <td>${vulnTotalBySeverity.low}</td>
-                <td>${vulnTotalBySeverity.negligible}</td>
-            </tr>
-        </table>
+            <table>
+                <tr>
+                    <th>Critical</th>
+                    <th>High</th>
+                    <th>Medium</th>
+                    <th>Low</th>
+                    <th>Negligible</th>
+                </tr>
+                <tr>
+                    <td>${vulnTotalBySeverity.critical}</td>
+                    <td>${vulnTotalBySeverity.high}</td>
+                    <td>${vulnTotalBySeverity.medium}</td>
+                    <td>${vulnTotalBySeverity.low}</td>
+                    <td>${vulnTotalBySeverity.negligible}</td>
+                </tr>
+            </table>
+        </div>
     `;
 }
 
@@ -121,16 +139,15 @@ function generatePackagesTable(packages: Package[]): string {
     let packagesTable = `
         <table>
             <tr>
-                <th>CVE</th>
+                <th>Vulnerability</th>
+                <th>Severity</th>
+                <th>CVSS</th>
+                <th>Exploit</th>
+                <th>Package</th>
+                <th>Version</th>
+                <th>Fix version</th>
                 <th>Type</th>
                 <th>Path</th>
-                <th>Score</th>
-                <th>Exploitable</th>
-                <th>Severity</th>
-                <th>Package</th>
-                <th>Current version</th>
-                <th>Suggested version</th>
-
             </tr>`;
 
     const vulnPackages: EnrichedVulnInfo[] = [];
@@ -163,14 +180,14 @@ function generatePackagesTable(packages: Package[]): string {
         var suggestedFixFormat = vuln.fix_version == 'undefined' ? vuln.fix_version : "N/A";
             packagesTable += `<tr>
                     <td>${vuln.name}</td>
-                    <td>${vuln.type}</td>
-                    <td>${vuln.path}</td>
+                    <td>${vuln.severity}</td>
                     <td>${vuln.cvssScore}</td>
                     <td>${vuln.exploitable}</td>
-                    <td>${vuln.severity}</td>
                     <td>${vuln.package}</td>
                     <td>${vuln.current_version}</td>
                     <td>${suggestedFixFormat}</td>
+                    <td>${vuln.type}</td>
+                    <td>${vuln.path}</td>
                 </tr>`;
     });
 

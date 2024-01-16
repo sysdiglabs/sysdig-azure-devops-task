@@ -14,7 +14,7 @@ async function run() {
     const binaryPath: string = await getScanningEngine();
     const scanningEngine: tr.ToolRunner = buildScanningEngineArg(binaryPath);
 
-    console.log('[INFO] Starting Sysdig Scanning Engine (Tech Preview)');
+    console.log('[INFO] Starting Sysdig CLI Scanner');
     tl.setVariable('SECURE_API_TOKEN', fetch.apikey);
 
     // runScanningEngine(scanningEngine);

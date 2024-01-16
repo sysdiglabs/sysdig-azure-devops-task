@@ -20,6 +20,10 @@ export class InputFetch {
         return tl.getBoolInput('verbose');
     }
 
+    get fullVulnsTable(): boolean {
+        return tl.getBoolInput('fullVulnsTable');
+    }
+
     get privileged(): boolean {
         return tl.getBoolInput('privileged');
     }

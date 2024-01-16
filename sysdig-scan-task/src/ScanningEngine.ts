@@ -60,8 +60,12 @@ export function buildScanningEngineArg(binaryPath: string): tr.ToolRunner {
   if (fetch.verbose) {
     scanningEngine.arg('--loglevel=debug');
     scanningEngine.arg('--console-log');
-    scanningEngine.arg('--full-vulns-table');
   }
+
+  // Set log level to debug
+    if (fetch.fullVulnsTable) {
+      scanningEngine.arg('--full-vulns-table');
+    }
 
   // Skip TLS verification on Sysdig enpoints
   if (fetch.skipTLS) {
