@@ -57,7 +57,7 @@
   },
   "contributions": [
     {
-      "id": "sysdig-scan-task",
+      "id": "sysdig-cli-scan-task",
       "type": "ms.vss-distributed-task.task",
       "targets": [
         "ms.vss-distributed-task.tasks"
@@ -86,7 +86,7 @@
   ],
   "files": [
     {
-      "path": "sysdig-scan-task"
+      "path": "sysdig-cli-scan-task"
     },
     {
       "path": "images/sysdig.png",
@@ -102,7 +102,7 @@
       "packagePath": "lib"
     },
     {
-      "path": "sysdig-scan-task/node_modules",
+      "path": "sysdig-cli-scan-task/node_modules",
       "addressable": true,
       "packagePath": "lib"
     }

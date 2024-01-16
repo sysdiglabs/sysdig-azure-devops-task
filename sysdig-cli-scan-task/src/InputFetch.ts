@@ -1,4 +1,4 @@
-import tl = require('azure-pipelines-task-lib/task');
+import tl = require('azure-pipelines-task-lib');
 
 export class InputFetch {
 

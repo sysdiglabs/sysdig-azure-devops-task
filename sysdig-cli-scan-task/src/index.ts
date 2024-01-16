@@ -1,4 +1,4 @@
-import tl = require('azure-pipelines-task-lib/task');
+import tl = require('azure-pipelines-task-lib');
 import tr = require('azure-pipelines-task-lib/toolrunner');
 import fs = require('fs');
 
