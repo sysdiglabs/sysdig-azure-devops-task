@@ -1,6 +1,6 @@
 {
   "manifestVersion": 1,
-  "id": "sysdig-scan-task",
+  "id": "sysdig-cli-scan-task",
   "name": "Sysdig CLI scanner",
   "version": "0.0.0",
   "publisher": "SysdigDevOps",
@@ -57,7 +57,7 @@
   },
   "contributions": [
     {
-      "id": "sysdig-scan-task-devops",
+      "id": "sysdig-cli-scan-task",
       "type": "ms.vss-distributed-task.task",
       "targets": [
         "ms.vss-distributed-task.tasks"
