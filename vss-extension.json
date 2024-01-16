@@ -27,9 +27,6 @@
   "content": {
     "details": {
       "path": "README.md"
-    },
-    "license": {
-      "path": "license-terms.md"
     }
   },
   "tags": [
