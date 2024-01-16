@@ -1,6 +1,6 @@
 {
   "$schema": "https://raw.githubusercontent.com/Microsoft/azure-pipelines-task-lib/master/tasks.schema.json",
-  "id": "5e925c66-5756-4f05-9238-258072d441c3",
+  "id": "a52fe4a2-0476-4973-bc50-cc44e9032e78",
   "name": "Sysdig-CLI-Scan",
   "friendlyName": "Sysdig CLI scanner",
   "description": "Scan images and infrastructure as code with Sysdig Secure as part of your development pipeline.",
