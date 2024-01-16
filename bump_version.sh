@@ -21,7 +21,7 @@ echo $new_version > VERSION
 jq ".version.Major = $major | \
     .version.Minor = $minor | \
     .version.Patch = $patch" \
-    sysdig-scan-task/task.json > tmp.json && mv tmp.json sysdig-scan-task/task.json
+    sysdig-cli-scan-task/task.json > tmp.json && mv tmp.json sysdig-cli-scan-task/task.json
 
 # Update vss-extension.json
 jq --arg major "$major" \

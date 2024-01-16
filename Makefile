@@ -1,5 +1,5 @@
 HOME := $(CURDIR)
-TYPESCRIPT_SOURCE := $(HOME)/sysdig-scan-task/
+TYPESCRIPT_SOURCE := $(HOME)/sysdig-cli-scan-task/
 # AZURE_DEVOPS_ACCESS_TOKEN ?=
 
 # Default target
