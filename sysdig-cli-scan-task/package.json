@@ -10,14 +10,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/SysdigDan/sysdig-azure-devops-task.git"
+    "url": "git+https://github.com/sysdiglabs/sysdig-azure-devops-task.git"
   },
   "author": "Sysdig",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/SysdigDan/sysdig-azure-devops-task/issues"
+    "url": "https://github.com/sysdiglabs/sysdig-azure-devops-task.git/issues"
   },
-  "homepage": "https://github.com/SysdigDan/sysdig-azure-devops-task#readme",
+  "homepage": "https://github.com/sysdiglabs/sysdig-azure-devops-task.git#readme",
   "dependencies": {
     "azure-pipelines-task-lib": "^3.2.0"
   },
