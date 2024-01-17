@@ -53,7 +53,7 @@ jobs:
       env:
         AZURE_DEVOPS_ACCESS_TOKEN: ${{ env.AZURE_DEVOPS_ACCESS_TOKEN }}
       run: |
-        make publish
+        make publish-release
 
     - name: Commit version increment
       run: |

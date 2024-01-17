@@ -1,0 +1,8 @@
+{
+  "id": "sysdig-cli-scan-task-test",
+  "public": false,
+  "galleryFlags": [
+    "Preview",
+    "Test"
+  ]
+}
