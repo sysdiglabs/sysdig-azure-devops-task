@@ -165,7 +165,6 @@ function generatePackagesTable(packages: Package[]): string {
         if (vulnPackage.vulns) {
             // for each vulns under vulnPackage, create a new vuln_info object and add to vulnsPackage list
             for (const vulnerability of vulnPackage.vulns) {
-                console.log("Package: ",vulnPackage);
                 const vuln_info: EnrichedVulnInfo = {
                     package: vulnPackage.name,
                     path: vulnPackage.path,
@@ -207,8 +206,6 @@ function sortVulnPackages(vulnPackages: EnrichedVulnInfo[]): EnrichedVulnInfo[] 
     return vulnPackages.sort((a, b) => {
         const severityIndexA = order.indexOf(a.severity.toLowerCase());
         const severityIndexB = order.indexOf(b.severity.toLowerCase());
-
-        console.log(`Comparing: ${a.severity} (${severityIndexA}) vs ${b.severity} (${severityIndexB})`);
 
         if (severityIndexA > severityIndexB) {
             return 1;

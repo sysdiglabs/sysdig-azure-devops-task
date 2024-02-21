@@ -5,3 +5,5 @@
 node_modules/
 output.html
 .npm
+id
+local_text.txt

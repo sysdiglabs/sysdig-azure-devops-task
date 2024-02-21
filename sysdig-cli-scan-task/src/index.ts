@@ -7,15 +7,16 @@ import { getScanningEngine, buildScanningEngineArg, runScanningEnginev2 } from '
 import { SysdigScan, generateHTMLTableFromSysdigJSON } from './ReportGenerator';
 // import { publishArtifact } from './PublishArtifact';
 
-async function run() {
+async function run(this: any) {
   try {
     const fetch: InputFetch = new InputFetch();
 
     const binaryPath: string = await getScanningEngine();
     const scanningEngine: tr.ToolRunner = buildScanningEngineArg(binaryPath);
-
-    console.log('[INFO] Starting Sysdig CLI Scanner');
     tl.setVariable('SECURE_API_TOKEN', fetch.apikey);
+    console.log('[INFO] Starting Sysdig CLI Scanner');
+
+    setProxy();
 
     // runScanningEngine(scanningEngine);
     await runScanningEnginev2(scanningEngine);
@@ -39,6 +40,27 @@ async function run() {
       errorMessage = err.message;
     }
     tl.setResult(tl.TaskResult.Failed, errorMessage);
+  }
+}
+
+function setProxy() {
+  const httpProxy = tl.getVariable("http_proxy") || tl.getVariable("HTTP_PROXY");
+  const httpsProxy = tl.getVariable("https_proxy") || tl.getVariable("HTTPS_PROXY");
+  const noProxy = tl.getVariable("no_proxy") || tl.getVariable("NO_PROXY");
+  if (httpProxy) {
+    process.env.HTTP_PROXY = httpProxy;
+    tl.setVariable("http_proxy", httpProxy);
+    console.log(`[INFO] Using HTTP_PROXY to ${httpProxy}`);
+  }
+  if (httpsProxy) {
+    process.env.HTTPS_PROXY = httpsProxy;
+    tl.setVariable("https_proxy", httpsProxy);
+    console.log(`[INFO] Using HTTPS_PROXY to ${httpsProxy}`);
+  }
+  if (noProxy) {
+    tl.setVariable("no_proxy", noProxy);
+    process.env.NO_PROXY = noProxy;
+    console.log(`[INFO] Using NO_PROXY to ${noProxy}`);
   }
 }
 

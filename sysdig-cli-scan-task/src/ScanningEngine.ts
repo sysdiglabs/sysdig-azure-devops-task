@@ -75,6 +75,10 @@ export function buildScanningEngineArg(binaryPath: string): tr.ToolRunner {
   if (fetch.jsonOutput) {
     scanningEngine.arg(['--json-scan-result=' + fetch.jsonOutputFile]);
   }
+
+  if (fetch.policy) {
+    scanningEngine.arg(['--policy=' + fetch.policy]);
+  }
   // Add image to be scanned
   scanningEngine.arg(fetch.image);
 
