@@ -60,6 +60,10 @@ export class InputFetch {
         return this.fetchString('sysdigCliScannerVersion', false);
     }
 
+    get policy(): string {
+        return this.fetchString('policy', false);
+    }
+
     private error(input: string, required: boolean): string {
         if (required) {
             tl.setResult(tl.TaskResult.Failed, input.toUpperCase().concat(' fetch failed.'));
