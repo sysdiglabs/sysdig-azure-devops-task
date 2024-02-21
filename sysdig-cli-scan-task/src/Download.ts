@@ -1,10 +1,12 @@
 import tl = require('azure-pipelines-task-lib');
 import tr = require('azure-pipelines-task-lib/toolrunner');
+import { InputFetch } from './InputFetch';
 
 const url = require('url');
 const https = require("https");
 const fs = require('fs');
 const Stream = require('stream').Transform;
+const fetch: InputFetch = new InputFetch();
 
 function displayFileSize(bytes: any) {
 
@@ -89,7 +91,12 @@ export function getVersion(): string {
   }
 
   var curlRunner: tr.ToolRunner = tl.tool('curl');
-  curlRunner.arg(['-L', '-s', 'https://download.sysdig.com/scanning/sysdig-cli-scanner/latest_version.txt'])
+
+  curlRunner.arg(['-L', '-s', 'https://download.sysdig.com/scanning/sysdig-cli-scanner/latest_version.txt']);
+
+  if (fetch.verbose) {
+    curlRunner.arg(['--verbose']);
+  }
   var latestVersion: tr.IExecSyncResult = curlRunner.execSync();
 
   const version: string = latestVersion.stdout.replace(/(\r\n|\n|\r)/gm, "");

@@ -1,6 +1,6 @@
 HOME := $(CURDIR)
 TYPESCRIPT_SOURCE := $(HOME)/sysdig-cli-scan-task/
-# AZURE_DEVOPS_ACCESS_TOKEN ?=
+AZURE_DEVOPS_ACCESS_TOKEN ?=
 
 # Default target
 all: build
@@ -8,6 +8,14 @@ all: build
 build: 
 	npm install
 	cd $(TYPESCRIPT_SOURCE) && npm install && tsc
+
+publish-local:
+	tfx extension publish \
+	--manifest-globs vss-extension-test.json \
+	--publisher IgorEulalio \
+	--extension-id b52fe4a2-0476-4973-bc50-cc44e9032e11 \
+	--share-with sysdigtest \
+	--token $(AZURE_DEVOPS_ACCESS_TOKEN) 
 
 publish-release:
 	tfx extension publish --manifest-globs $(HOME)/vss-extension.json --override-file $(HOME)/vss-extension-release.json \
