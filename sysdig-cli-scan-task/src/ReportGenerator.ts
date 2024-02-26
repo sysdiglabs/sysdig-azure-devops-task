@@ -184,7 +184,7 @@ function generatePackagesTable(packages: Package[]): string {
     const sortedVulnPackages = sortVulnPackages(vulnPackages);
     
     sortedVulnPackages.forEach((vuln: EnrichedVulnInfo) => {
-        var suggestedFixFormat = vuln.fix_version == 'undefined' ? vuln.fix_version : "N/A";
+        var suggestedFixFormat = vuln.fix_version !== undefined ? vuln.fix_version : "N/A";
             packagesTable += `<tr>
                     <td>${vuln.name}</td>
                     <td>${vuln.severity}</td>
