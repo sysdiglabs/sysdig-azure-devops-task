@@ -1,6 +1,7 @@
 import tl = require('azure-pipelines-task-lib');
 import tr = require('azure-pipelines-task-lib/toolrunner');
 import { InputFetch } from './InputFetch';
+import { HttpsProxyAgent } from 'https-proxy-agent';
 
 const url = require('url');
 const https = require("https");
@@ -33,7 +34,7 @@ function getOptions(strUrl: string, ignoreCertificateChecks: boolean, authType: 
       }
       if (ignoreCertificateChecks) {
         console.log("[INFO] Ignore certificate checks : 'True'");
-        options.rejectUnhauthorized = false;
+        options.rejectUnauthorized = false;
         // process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
       }
       else {
@@ -70,6 +71,12 @@ function getOptions(strUrl: string, ignoreCertificateChecks: boolean, authType: 
       break;
   }
 
+  const proxy = process.env.HTTPS_PROXY;
+  if (proxy) {
+    const proxyAgent = new HttpsProxyAgent(proxy);
+    options.agent = proxyAgent;
+    console.log("[INFO] Using proxy for CLI download : '" + proxy + "'");
+  }
   return options;
 }
 

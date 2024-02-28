@@ -10,7 +10,7 @@
   "version": {
     "Major": 0,
     "Minor": 0,
-    "Patch": 10
+    "Patch": 11
   },
   "groups": [
     {
@@ -122,10 +122,19 @@
       "required": false,
       "helpMarkDown": "Version of the Sysdig CLI Scanner to use. Latest will be used if not specified",
       "groupName": "overrides"
+    },
+    {
+      "name": "policy",
+      "type": "string",
+      "label": "Policy to evaluate in the pipeline execution. If not specified, only the Always Apply policy will be evaluated.",
+      "defaultValue": "",
+      "required": false,
+      "helpMarkDown": "Policy to evaluate in the pipeline execution. If not specified, only the Always Apply policy will be evaluated.",
+      "groupName": "overrides"
     }
   ],
   "execution": {
-    "Node10": {
+    "Node16": {
       "target": "dist/index.js"
     }
   }

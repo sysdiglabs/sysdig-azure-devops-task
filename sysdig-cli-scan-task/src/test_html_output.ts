@@ -1,13 +1,25 @@
-// ts-node sysdig-cli-scan-task/src/test.ts
-
-import fs = require('fs');
-
-//import { InputFetch } from './InputFetch';
-//import { getScanningEngine, buildScanningEngineArg, runScanningEnginev2 } from './ScanningEngine';
+import path = require("path");
+import { downloadFile } from './Download';
 import { SysdigScan, generateHTMLTableFromSysdigJSON } from './ReportGenerator';
-// import { publishArtifact } from './PublishArtifact';
 
-async function run() {
+async function testDownload() {
+  var version = "1.8.5"
+  console.log("[INFO] Downloading Sysdig Scanning Engine. Version: ", version);
+  var strUrl = `https://download.sysdig.com/scanning/bin/sysdig-cli-scanner/${version}/linux/amd64/sysdig-cli-scanner`;
+
+  var strTargetFilename = 'sysdig-cli-scanner';
+  var authType = 'noAuth';
+  var ignoreCertificateChecks = true;
+  var catchResponse = true;
+  var output = path.join(__dirname, strTargetFilename)
+
+  console.log("[INFO] Source download url : '" + strUrl + "'");
+  console.log("[INFO] Target output file : '" + output + "'");
+
+  await downloadFile(strUrl, ignoreCertificateChecks, authType, output, catchResponse);
+}
+
+async function generateHtmlFile() {
     //const fetch: InputFetch = new InputFetch();
 
     console.log('[INFO] Starting Sysdig Scanning Engine (Tech Preview)');
@@ -19,5 +31,5 @@ async function run() {
     console.log('[INFO] HTML report generated successfully');
   }
 
-
-run();
+generateHtmlFile();
+testDownload();
