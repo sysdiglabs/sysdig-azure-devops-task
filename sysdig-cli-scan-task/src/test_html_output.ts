@@ -1,6 +1,7 @@
 import path = require("path");
 import { downloadFile } from './Download';
 import { SysdigScan, generateHTMLTableFromSysdigJSON } from './ReportGenerator';
+import fs = require('fs');
 
 async function testDownload() {
   var version = "1.8.5"
