@@ -68,6 +68,15 @@ variables:
   value: 'nginx:latest'
   readonly: true
 - group: sysdig
+# Define proxy environment variables
+# Proxy variables will be used by the task and the CLI itself to perform network calls via proxy
+# For some steps different proxies are required, for instance the CLI download is only performed via HTTPS
+- name: HTTP_PROXY
+  value: 'http://proxy:8080'
+- name: HTTPS_PROXY
+  value: 'http://proxy:443'
+- name: NO_PROXY
+  value: '*'
 
 steps:
 - task: DockerInstaller@0
@@ -88,6 +97,7 @@ steps:
     jsonOutput: true
     jsonOutputFile: 'sysdig-cli-scan-output.json'
     sysdigCliScannerVersion: '1.6.0'
+    policy: my_custom_policy,my-custom-policy-ab
 
 - task: PublishBuildArtifacts@1
   inputs:
@@ -101,6 +111,39 @@ steps:
     ArtifactName: 'json_report' # Name of the artifact
     publishLocation: 'Container' # Options: container, filePath
 ```
+
+## Task Inputs
+## Mandatory Inputs
+
+- **Sysdig Secure SaaS Region (`sysdigurl`)**: The region URL for Sysdig Secure. Must be one of the following:
+  - US East (`https://secure.sysdig.com`)
+  - US West (`https://us2.app.sysdig.com`)
+  - US West - GCP (`https://app.us4.sysdig.com`)
+  - European Union (`https://eu1.app.sysdig.com`)
+  - Asia Pacific (`https://app.au1.sysdig.com`)
+  - Default: `https://secure.sysdig.com`
+
+- **Sysdig Secure API Token (`apikey`)**: Your Sysdig Secure API token for authentication.
+
+- **Full Image Tag to Scan (`image`)**: The full tag of the image to be scanned, in the format `<repo/image:tag>`. Default: `$(imageName):$(tag)`
+
+## Optional Inputs
+
+- **Fail Build (`failBuild`)**: Whether to fail the build if the policy evaluation fails. Default: `false`
+
+- **Skip TLS Verification (`skipTLS`)**: Whether to skip TLS verification when calling Sysdig endpoints. Default: `false`,  
+
+- **Verbose Logging Output (`verbose`)**: Enables more verbose logging output from the Sysdig CLI Scanner. Default: `false`,  
+
+- **Output Full Vulnerability Table (`fullVulnsTable`)**: Outputs the full vulnerability table in the console output. Default: `false`,  
+
+- **JSON Output (`jsonOutput`)**: Whether to export the JSON result file to `$(System.DefaultWorkingDirectory)/sysdig-cli-scan-output.json`. Default: `true`,  
+
+- **JSON Output File (`jsonOutputFile`)**: The file name to export the JSON result to. This will be ignored if `jsonOutput` is `false`. Default: `sysdig-cli-scan-output.json`,    
+
+- **Sysdig CLI Scanner Version (`sysdigCliScannerVersion`)**: The version of the Sysdig CLI Scanner to use. Will use the latest version if not specified. Default: `latest`,  
+
+- **Policy (`policy`)**: Policy to evaluate in the pipeline execution. If not specified, only the Always Apply policy will be evaluated. Default: `null`,  
 
 ## More Information
 For documentation on Sysdig Secure, including policy and capabilities see the [Sysdig Secure Documentation](https://docs.sysdig.com/en/docs/sysdig-secure/)
