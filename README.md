@@ -26,7 +26,7 @@ Under default behavior, the pipeline will not fail when the container does not p
 Example yaml:
 
 ```
-- task: Sysdig-CLI-Scan@1
+- task: Sysdig-CLI-Scan@0
   inputs:
     sysdigurl: 'https://app.us4.sysdig.com'
     apikey: $(SYSDIG_API_TOKEN)
@@ -42,7 +42,7 @@ results of the Sysdig Secure scan, set the `failBuild` option to `true`.
 Example yaml:
 
 ```
-- task: Sysdig-CLI-Scan@1
+- task: Sysdig-CLI-Scan@0
   inputs:
     sysdigurl: 'https://app.us4.sysdig.com'
     apikey: $(SYSDIG_API_TOKEN)
