@@ -9,7 +9,7 @@ build:
 	npm install
 	cd $(TYPESCRIPT_SOURCE) && npm install && tsc
 
-publish-local:
+publish-local: build
 	tfx extension publish \
 	--manifest-globs vss-extension-test.json \
 	--publisher IgorEulalio \

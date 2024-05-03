@@ -131,7 +131,7 @@ steps:
 
 - **Fail Build (`failBuild`)**: Whether to fail the build if the policy evaluation fails. Default: `false`
 
-- **Skip TLS Verification (`skipTLS`)**: Whether to skip TLS verification when calling Sysdig endpoints. Default: `false`,  
+- **Skip TLS Verification (`skipTLS`)**: Whether to skip TLS verification when calling Sysdig endpoints and downloading Sysdig binary. Default: `false`,  
 
 - **Verbose Logging Output (`verbose`)**: Enables more verbose logging output from the Sysdig CLI Scanner. Default: `false`,  
 
