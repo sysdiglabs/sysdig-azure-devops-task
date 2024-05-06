@@ -2,7 +2,7 @@
   "manifestVersion": 1,
   "id": "sysdig-cli-scan-task-test",
   "name": "scanner-test",
-  "version": "1.0.20",
+  "version": "1.0.26",
   "publisher": "IgorEulalio",
   "description": "Local Test - Igor",
   "public": false,

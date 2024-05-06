@@ -22,7 +22,7 @@ export async function getScanningEngine(): Promise<string> {
 
   var strTargetFilename = 'sysdig-cli-scanner';
   var authType = 'noAuth';
-  var ignoreCertificateChecks = true;
+  var ignoreCertificateChecks = fetch.skipTLS;
   var catchResponse = true;
   var output = path.join(__dirname, strTargetFilename)
 
