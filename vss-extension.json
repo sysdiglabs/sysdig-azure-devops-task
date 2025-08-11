@@ -2,7 +2,7 @@
   "manifestVersion": 1,
   "id": "sysdig-cli-scan-task",
   "name": "Sysdig CLI scanner",
-  "version": "0.1.0",
+  "version": "0.0.15",
   "publisher": "SysdigDevOps",
   "description": "Scan images with Sysdig Secure as part of your development pipeline.",
   "public": true,
