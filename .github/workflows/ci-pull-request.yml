@@ -1,7 +1,7 @@
-name: Build and release extension
+name: Check extension
 
 on:
-  push:
+  pull_request:
     branches:
       - main
 
@@ -12,7 +12,6 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
@@ -42,26 +41,3 @@ jobs:
     - name: Build release
       run: |
         make build
-
-    - name: Increment version
-      run: |
-        chmod +x ./bump_version.sh
-        NEW_VERSION=$(./bump_version.sh)
-        echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
-
-    - name: Publish release
-      env:
-        AZURE_DEVOPS_ACCESS_TOKEN: ${{ env.AZURE_DEVOPS_ACCESS_TOKEN }}
-      run: |
-        make publish-release
-
-    - name: Commit version increment
-      run: |
-        git config --local user.email "action@github.com"
-        git config --local user.name "GitHub Action"
-        git add ./sysdig-cli-scan-task/task.json
-        git add ./VERSION
-        git add ./vss-extension.json
-        git commit -m "Increment version to ${{ env.NEW_VERSION }}"
-        git tag ${{ env.NEW_VERSION }}
-        git push origin HEAD --tags
