@@ -9,6 +9,10 @@ permissions:
   contents: write
   id-token: write
 
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -35,23 +39,30 @@ jobs:
         subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
     - name: Get Azure DevOps access token
-      id: get_token
+      id: devops_token
       run: |
-        echo "AZURE_DEVOPS_ACCESS_TOKEN=$(az account get-access-token --resource ${{ secrets.AZURE_MARKETPLACE_ACCESS_SCOPE }} --query accessToken -o tsv)" >> $GITHUB_ENV
+        TOKEN="$(az account get-access-token --resource "${{ secrets.AZURE_MARKETPLACE_ACCESS_SCOPE }}" --query accessToken -o tsv)"
+        echo "::add-mask::$TOKEN"
+        echo "azure_devops_access_token=$TOKEN" >> "$GITHUB_OUTPUT"
 
     - name: Build release
       run: |
         make build
 
     - name: Increment version
+      id: bump
       run: |
         chmod +x ./bump_version.sh
-        NEW_VERSION=$(./bump_version.sh)
-        echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
+        NEW_VERSION="$(./bump_version.sh)"
+        if [[ -z "$NEW_VERSION" ]]; then
+          echo "Version bump script returned empty version" >&2
+          exit 1
+        fi
+        echo "new_version=$NEW_VERSION" >> "$GITHUB_OUTPUT"
 
     - name: Publish release
       env:
-        AZURE_DEVOPS_ACCESS_TOKEN: ${{ env.AZURE_DEVOPS_ACCESS_TOKEN }}
+        AZURE_DEVOPS_ACCESS_TOKEN: ${{ steps.devops_token.outputs.azure_devops_access_token }}
       run: |
         make publish-release
 
@@ -59,9 +70,20 @@ jobs:
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
-        git add ./sysdig-cli-scan-task/task.json
-        git add ./VERSION
-        git add ./vss-extension.json
-        git commit -m "Increment version to ${{ env.NEW_VERSION }}"
-        git tag ${{ env.NEW_VERSION }}
-        git push origin HEAD --tags
+
+        git add ./sysdig-cli-scan-task/task.json ./VERSION ./vss-extension.json
+        if git diff --cached --quiet; then
+          echo "No changes to commit."
+          exit 0
+        fi
+
+        VERSION="${{ steps.bump.outputs.new_version }}"
+        git commit -m "chore: bump version to ${VERSION}"
+        if git tag -l "${VERSION}" | grep -q "^${VERSION}$"; then
+          echo "Tag ${VERSION} already exists, skipping tag creation."
+        else
+          git tag -a "${VERSION}" -m "Release ${VERSION}"
+        fi
+
+        git push origin HEAD
+        git push origin "${VERSION}"

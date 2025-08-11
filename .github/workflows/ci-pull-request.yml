@@ -34,10 +34,23 @@ jobs:
         subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
     - name: Get Azure DevOps access token
-      id: get_token
+      id: devops_token
       run: |
-        echo "AZURE_DEVOPS_ACCESS_TOKEN=$(az account get-access-token --resource ${{ secrets.AZURE_MARKETPLACE_ACCESS_SCOPE }} --query accessToken -o tsv)" >> $GITHUB_ENV
+        TOKEN="$(az account get-access-token --resource "${{ secrets.AZURE_MARKETPLACE_ACCESS_SCOPE }}" --query accessToken -o tsv)"
+        echo "::add-mask::$TOKEN"
+        echo "azure_devops_access_token=$TOKEN" >> "$GITHUB_OUTPUT"
 
     - name: Build release
       run: |
         make build
+
+    - name: Increment version
+      id: bump
+      run: |
+        chmod +x ./bump_version.sh
+        NEW_VERSION="$(./bump_version.sh)"
+        if [[ -z "$NEW_VERSION" ]]; then
+          echo "Version bump script returned empty version" >&2
+          exit 1
+        fi
+        echo "new_version=$NEW_VERSION" >> "$GITHUB_OUTPUT"
