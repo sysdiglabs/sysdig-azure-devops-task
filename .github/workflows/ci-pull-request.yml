@@ -1,7 +1,7 @@
-name: Build and release extension
+name: Check extension
 
 on:
-  push:
+  pull_request:
     branches:
       - main
 
@@ -9,14 +9,9 @@ permissions:
   contents: write
   id-token: write
 
-concurrency:
-  group: release-${{ github.ref }}
-  cancel-in-progress: true
-
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
@@ -59,31 +54,3 @@ jobs:
           exit 1
         fi
         echo "new_version=$NEW_VERSION" >> "$GITHUB_OUTPUT"
-
-    - name: Publish release
-      env:
-        AZURE_DEVOPS_ACCESS_TOKEN: ${{ steps.devops_token.outputs.azure_devops_access_token }}
-      run: |
-        make publish-release
-
-    - name: Commit version increment
-      run: |
-        git config --local user.email "action@github.com"
-        git config --local user.name "GitHub Action"
-
-        git add ./sysdig-cli-scan-task/task.json ./VERSION ./vss-extension.json
-        if git diff --cached --quiet; then
-          echo "No changes to commit."
-          exit 0
-        fi
-
-        VERSION="${{ steps.bump.outputs.new_version }}"
-        git commit -m "chore: bump version to ${VERSION}"
-        if git tag -l "${VERSION}" | grep -q "^${VERSION}$"; then
-          echo "Tag ${VERSION} already exists, skipping tag creation."
-        else
-          git tag -a "${VERSION}" -m "Release ${VERSION}"
-        fi
-
-        git push origin HEAD
-        git push origin "${VERSION}"
