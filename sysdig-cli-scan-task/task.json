@@ -10,7 +10,7 @@
   "version": {
     "Major": 0,
     "Minor": 0,
-    "Patch": 15
+    "Patch": 16
   },
   "groups": [
     {
@@ -134,7 +134,7 @@
     }
   ],
   "execution": {
-    "Node20": {
+    "Node16": {
       "target": "dist/index.js"
     }
   }
