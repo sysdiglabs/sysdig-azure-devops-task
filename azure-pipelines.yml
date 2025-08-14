@@ -1,0 +1,68 @@
+trigger: none
+pr:
+  autoCancel: "true"
+  branches:
+    include: ['*']
+
+variables:
+  imageName: 'gcr.io/distroless/static:nonroot'
+  system.debug: 'true'
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+  - checkout: self
+    clean: "true"
+
+  - task: NodeTool@0
+    inputs:
+      versionSpec: '20.x'
+    displayName: 'Use Node 20.x'
+
+  - script: npm ci
+    displayName: 'Install deps'
+
+  - script: npm run build --if-present
+    displayName: 'Build task'
+
+  - bash: docker pull $(imageName) || true
+    displayName: 'Pre-pull test image'
+
+  - bash: |
+      set -euo pipefail
+      # 1) Find task.json and resolve the declared entrypoint
+      TASK_JSON="$(git ls-files | grep -E '(^|/)task\.json$' | head -n1)"
+      [ -n "$TASK_JSON" ] || { echo "task.json not found"; exit 1; }
+
+      TARGET=$(jq -r '.execution.Node20.target // .execution.Node16.target // .execution.Node.target // empty' "$TASK_JSON")
+      if [ -z "$TARGET" ]; then
+        for p in dist/index.js lib/index.js out/index.js index.js; do
+          [ -f "$p" ] && TARGET="$p" && break
+        done
+      fi
+      [ -n "$TARGET" ] || { echo "Cannot resolve task entrypoint"; cat "$TASK_JSON"; exit 1; }
+      echo "Entrypoint: $TARGET"
+
+      # 2) Minimal agent-like environment
+      export SYSTEM_DEFAULTWORKINGDIRECTORY="$PWD"
+      export BUILD_SOURCESDIRECTORY="$PWD"
+      export AGENT_TEMPDIRECTORY="$(mktemp -d)"
+      export AGENT_TOOLSDIRECTORY="$(mktemp -d)"
+      export AGENT_VERSION="3.999.0"
+      export SYSTEM_COLLECTIONURI="https://dev.azure.com/dummy/"
+      export SYSTEM_TEAMPROJECT="dummy"
+      export BUILD_BUILDID="$(Build.BuildId)"
+      export SYSTEM_DEBUG="$(system.debug)"
+
+      # 3) Map task inputs -> INPUT_* (as azure-pipelines-task-lib expects)
+      export INPUT_SYSDIGURL='https://app.us4.sysdig.com'
+      export INPUT_APIKEY='$(SYSDIG_API_TOKEN)'
+      export INPUT_IMAGE='$(imageName)'
+      export INPUT_VERBOSE='true'
+      export INPUT_FAILBUILD='false'   # don't fail the build on vulnerabilities
+
+      # 4) Run the task locally (no extension publish)
+      node "$TARGET"
+    displayName: 'Local smoke-run of the task (no publish)'
+
