@@ -6,8 +6,8 @@ AZURE_DEVOPS_ACCESS_TOKEN ?=
 all: build
 
 build: 
-	npm ci
-	cd $(TYPESCRIPT_SOURCE) && npm ci && tsc
+	npm install
+	cd $(TYPESCRIPT_SOURCE) && npm install && tsc
 
 publish-local: build
 	tfx extension publish \
