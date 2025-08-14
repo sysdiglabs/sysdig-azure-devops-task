@@ -56,7 +56,7 @@ steps:
       export SYSTEM_DEBUG="$(system.debug)"
 
       # 3) Map task inputs -> INPUT_* (as azure-pipelines-task-lib expects)
-      export INPUT_SYSDIGURL='https://app.us4.sysdig.com'
+      export INPUT_SYSDIGURL='https://app.us2.sysdig.com'
       export INPUT_APIKEY='$(SYSDIG_API_TOKEN)'
       export INPUT_IMAGE='$(imageName)'
       export INPUT_VERBOSE='true'
