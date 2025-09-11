@@ -66,6 +66,7 @@ steps:
       export INPUT_IMAGE='$(imageName)'
       export INPUT_VERBOSE='true'
       export INPUT_FAILBUILD='false'
+      export INPUT_SYSDIGCLISCANNERVERSION='latest'
 
       # Run the task directly
       node sysdig-cli-scan-task/dist/index.js
