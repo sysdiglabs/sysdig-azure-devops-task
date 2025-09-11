@@ -24,7 +24,7 @@ steps:
   inputs:
     targetType: 'inline'
     script: 'npm ci --include=dev'
-    workingDir: 'sysdig-cli-scan-task'
+    workingDirectory: 'sysdig-cli-scan-task'
   displayName: 'Install deps'
 
 - task: Bash@3
@@ -33,7 +33,7 @@ steps:
     script: |
       set -e
       npm run build
-    workingDir: 'sysdig-cli-scan-task'
+    workingDirectory: 'sysdig-cli-scan-task'
   displayName: 'Build task'
 
 - task: Bash@3
