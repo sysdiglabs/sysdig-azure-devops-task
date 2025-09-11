@@ -1,3 +1,4 @@
+# Re-evaluating trigger
 trigger: none
 pr:
   autoCancel: "true"
