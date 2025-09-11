@@ -8,10 +8,11 @@
   "category": "Utility",
   "author": "Sysdig",
   "version": {
-    "Major": 0,
+    "Major": 1,
     "Minor": 0,
-    "Patch": 16
+    "Patch": 0
   },
+  "minimumAgentVersion": "3.232.1",
   "groups": [
     {
       "name": "overrides",
@@ -134,7 +135,7 @@
     }
   ],
   "execution": {
-    "Node16": {
+    "Node20_1": {
       "target": "dist/index.js"
     }
   }
