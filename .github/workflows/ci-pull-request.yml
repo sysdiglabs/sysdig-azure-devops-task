@@ -20,7 +20,7 @@ jobs:
     - name: Setup Node.js
       uses: actions/setup-node@v2
       with:
-        node-version: '14'
+        node-version: '20.x'
 
     - name: Install tfx-cli and typescript
       run: |
