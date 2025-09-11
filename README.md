@@ -147,3 +147,13 @@ steps:
 
 ## More Information
 For documentation on Sysdig Secure, including policy and capabilities see the [Sysdig Secure Documentation](https://docs.sysdig.com/en/docs/sysdig-secure/)
+
+## Release Process
+
+The release process is automated using GitHub Actions. To create a new release, follow these steps:
+
+1.  **Create a Pull Request:** Make your changes in a new branch and open a pull request against `main`.
+2.  **Bump the Version:** The version number is managed in `sysdig-cli-scan-task/package.json`. To create a release, increment the `version` field in this file.
+3.  **Automatic Sync:** When the change to `package.json` is pushed, a GitHub Action will automatically run the `./sync_versions.sh` script. This updates the version across all necessary files (like `task.json` and `vss-extension.json`) and pushes the changes to your branch.
+4.  **Merge:** After the pull request is reviewed and merged into `main`, the release workflow is triggered.
+5.  **Publish:** The workflow builds the extension, publishes it to the marketplace, and creates a corresponding Git tag.
