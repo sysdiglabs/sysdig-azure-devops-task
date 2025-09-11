@@ -18,7 +18,7 @@ publish-local: build
 	--token $(AZURE_DEVOPS_ACCESS_TOKEN) 
 
 publish-release:
-	tfx extension publish --manifest-globs $(HOME)/vss-extension.json --override-file $(HOME)/vss-extension-release.json \
+	tfx extension publish --manifest-globs $(HOME)/vss-extension.json --overrides-file $(HOME)/vss-extension-release.json \
 	 --token $(AZURE_DEVOPS_ACCESS_TOKEN)
 
 .PHONY: build publish
