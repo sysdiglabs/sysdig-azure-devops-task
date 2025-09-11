@@ -66,5 +66,8 @@ steps:
       export INPUT_FAILBUILD='false'
 
       # Run the task directly
+      echo "--- FILE LISTING ---"
+      ls -R
+      echo "--- END FILE LISTING ---"
       node sysdig-cli-scan-task/dist/index.js
   displayName: 'Local smoke-run of the task'
