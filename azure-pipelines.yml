@@ -20,11 +20,17 @@ steps:
       versionSpec: '20.x'
     displayName: 'Use Node 20.x'
 
-  - bash: npm ci
+  - task: Bash@3
+    inputs:
+      targetType: 'inline'
+      script: 'npm ci'
     workingDirectory: 'sysdig-cli-scan-task'
     displayName: 'Install deps'
 
-  - bash: npm run build --if-present
+  - task: Bash@3
+    inputs:
+      targetType: 'inline'
+      script: 'npm run build --if-present'
     workingDirectory: 'sysdig-cli-scan-task'
     displayName: 'Build task'
 
