@@ -61,7 +61,7 @@ steps:
       export SYSTEM_DEBUG="$(system.debug)"
 
       # Map task inputs
-      export INPUT_SYSDIGURL='https://app.us2.sysdig.com'
+      export INPUT_SYSDIGURL='https://us2.app.sysdig.com'
       export INPUT_APIKEY='$(SYSDIG_API_TOKEN)'
       export INPUT_IMAGE='$(imageName)'
       export INPUT_VERBOSE='true'
