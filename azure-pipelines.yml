@@ -21,9 +21,11 @@ steps:
     displayName: 'Use Node 20.x'
 
   - script: npm ci
+    workingDirectory: 'sysdig-cli-scan-task'
     displayName: 'Install deps'
 
   - script: npm run build --if-present
+    workingDirectory: 'sysdig-cli-scan-task'
     displayName: 'Build task'
 
   - bash: docker pull $(imageName) || true
@@ -32,16 +34,21 @@ steps:
   - bash: |
       set -euo pipefail
       # 1) Find task.json and resolve the declared entrypoint
-      TASK_JSON="$(git ls-files | grep -E '(^|/)task\.json$' | head -n1)"
-      [ -n "$TASK_JSON" ] || { echo "task.json not found"; exit 1; }
+      TASK_JSON="$(git ls-files | grep -E '(^|/)task\.json
 
-      TARGET=$(jq -r '.execution.Node20.target // .execution.Node16.target // .execution.Node.target // empty' "$TASK_JSON")
-      if [ -z "$TARGET" ]; then
+ | head -n1)"
+      [ -n "$TASK_JSON" ] || { echo "task.json not found"; exit 1; }
+      TASK_DIR="$(dirname "$TASK_JSON")"
+
+      TARGET_REL_PATH=$(jq -r '.execution.Node20.target // .execution.Node16.target // .execution.Node.target // empty' "$TASK_JSON")
+      if [ -z "$TARGET_REL_PATH" ]; then
         for p in dist/index.js lib/index.js out/index.js index.js; do
-          [ -f "$p" ] && TARGET="$p" && break
+          [ -f "$TASK_DIR/$p" ] && TARGET_REL_PATH="$p" && break
         done
       fi
-      [ -n "$TARGET" ] || { echo "Cannot resolve task entrypoint"; cat "$TASK_JSON"; exit 1; }
+
+      [ -n "$TARGET_REL_PATH" ] || { echo "Cannot resolve task entrypoint"; cat "$TASK_JSON"; exit 1; }
+      TARGET="$TASK_DIR/$TARGET_REL_PATH"
       echo "Entrypoint: $TARGET"
 
       # 2) Minimal agent-like environment
