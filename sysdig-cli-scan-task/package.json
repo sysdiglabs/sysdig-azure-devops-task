@@ -1,6 +1,6 @@
 {
   "name": "sysdig-cli-scan-task",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Sysdig Secure Scan Task",
   "main": "index.js",
   "scripts": {
