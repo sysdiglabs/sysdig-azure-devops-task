@@ -27,9 +27,6 @@ fi
 
 echo "Syncing to version $VERSION"
 
-# Update root package.json
-jq --arg VERSION "$VERSION" '.version = $VERSION' package.json > package.json.tmp && mv package.json.tmp package.json
-
 # Update vss-extension.json
 jq --arg VERSION "$VERSION" '.version = $VERSION' vss-extension.json > vss-extension.json.tmp && mv vss-extension.json.tmp vss-extension.json
 
@@ -41,7 +38,6 @@ PATCH=$(echo "$VERSION" | cut -d. -f3)
 jq ".version.Major = $MAJOR | .version.Minor = $MINOR | .version.Patch = $PATCH" sysdig-cli-scan-task/task.json > sysdig-cli-scan-task/task.json.tmp && mv sysdig-cli-scan-task/task.json.tmp sysdig-cli-scan-task/task.json
 
 # Run npm install to update package-lock.json files
-npm install
 (cd sysdig-cli-scan-task && npm install)
 
 echo "Versions synchronized successfully"
