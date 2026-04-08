@@ -132,6 +132,15 @@
       "required": false,
       "helpMarkDown": "Policy to evaluate in the pipeline execution. If not specified, only the Always Apply policy will be evaluated.",
       "groupName": "overrides"
+    },
+    {
+      "name": "detailedPoliciesEval",
+      "type": "boolean",
+      "label": "Show detailed policies evaluation results",
+      "defaultValue": false,
+      "required": false,
+      "helpMarkDown": "Show detailed per-policy evaluation results in the output.",
+      "groupName": "overrides"
     }
   ],
   "execution": {

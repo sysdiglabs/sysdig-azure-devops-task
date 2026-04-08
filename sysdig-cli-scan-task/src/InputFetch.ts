@@ -64,6 +64,10 @@ export class InputFetch {
         return this.fetchString('policy', false);
     }
 
+    get detailedPoliciesEval(): boolean {
+        return tl.getBoolInput('detailedPoliciesEval');
+    }
+
     private error(input: string, required: boolean): string {
         if (required) {
             tl.setResult(tl.TaskResult.Failed, input.toUpperCase().concat(' fetch failed.'));

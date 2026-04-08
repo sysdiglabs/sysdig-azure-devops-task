@@ -79,6 +79,11 @@ export function buildScanningEngineArg(binaryPath: string): tr.ToolRunner {
   if (fetch.policy) {
     scanningEngine.arg(['--policy=' + fetch.policy]);
   }
+
+  if (fetch.detailedPoliciesEval) {
+    scanningEngine.arg('--detailed-policies-eval');
+  }
+
   // Add image to be scanned
   scanningEngine.arg(fetch.image);
 
