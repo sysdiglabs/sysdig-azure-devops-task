@@ -19,16 +19,20 @@
         };
       in
       {
+        packages.tfx-cli = pkgs.tfx-cli;
+
         devShells.default =
           with pkgs;
           mkShell {
             packages = [
               azure-cli
+              curl
               git
               jq
               just
               nodejs_22
               pinact
+              sd
               tfx-cli
               typescript
             ];

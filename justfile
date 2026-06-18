@@ -29,3 +29,28 @@ publish-release:
 # Pin GitHub Actions to commit SHAs
 pin-actions:
     pinact run -u
+
+# Update everything: flake inputs, tfx-cli, and pinned actions
+update:
+    nix flake update
+    nix develop --command just update-tfx
+    nix develop --command just pin-actions
+
+# Bump tfx-cli to the latest upstream commit and recompute its hashes
+update-tfx:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    rev="$(git ls-remote https://github.com/Microsoft/tfs-cli HEAD | cut -f1)"
+    version="$(curl -fsSL "https://raw.githubusercontent.com/Microsoft/tfs-cli/${rev}/package.json" | jq -r .version)"
+    sd 'rev = ".*";' "rev = \"${rev}\";" nix/tfx-cli.nix
+    sd 'version = ".*";' "version = \"${version}\";" nix/tfx-cli.nix
+    just rehash-tfx
+    echo "tfx-cli -> ${version} (${rev})"
+
+# Recompute the source and npm hashes in nix/tfx-cli.nix
+rehash-tfx:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    rehash() { sd "${1} = \".*\";" "${1} = \"\";" nix/tfx-cli.nix; h="$( (nix build -L --no-link .#tfx-cli || true) 2>&1 | sed -nE 's/.*got:[[:space:]]+([^ ]+).*/\1/p' | tail -1)"; [ -n "${h}" ] && sd "${1} = \"\";" "${1} = \"${h}\";" nix/tfx-cli.nix && echo "${1} -> ${h}"; }
+    rehash hash
+    rehash npmDepsHash
