@@ -21,4 +21,7 @@ publish-release:
 	tfx extension publish --manifest-globs $(HOME)/vss-extension.json --overrides-file $(HOME)/vss-extension-release.json \
 	 --token $(AZURE_DEVOPS_ACCESS_TOKEN)
 
-.PHONY: build publish
+pin-actions:
+	pinact run -u
+
+.PHONY: build publish publish-local publish-release pin-actions

@@ -7,3 +7,5 @@ output.html
 .npm
 id
 local_text.txt
+.direnv
+result
