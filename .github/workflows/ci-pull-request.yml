@@ -44,4 +44,4 @@ jobs:
 
     - name: Build release
       run: |
-        make build
+        just build

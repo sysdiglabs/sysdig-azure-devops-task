@@ -69,14 +69,14 @@ jobs:
     - name: Build release
       if: steps.check_version.outputs.changed == 'true'
       run: |
-        make build
+        just build
 
     - name: Publish release
       if: steps.check_version.outputs.changed == 'true'
       env:
         AZURE_DEVOPS_ACCESS_TOKEN: ${{ env.AZURE_DEVOPS_ACCESS_TOKEN }}
       run: |
-        make publish-release
+        just publish-release
 
     - name: Create Git Tag
       if: steps.check_version.outputs.changed == 'true'

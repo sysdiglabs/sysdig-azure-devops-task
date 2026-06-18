@@ -25,8 +25,8 @@
             packages = [
               azure-cli
               git
-              gnumake
               jq
+              just
               nodejs_22
               pinact
               tfx-cli
