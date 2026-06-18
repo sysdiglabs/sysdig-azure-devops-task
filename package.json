@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "azure-pipelines-task-lib": "^5.0.1-preview.0",
+    "azure-pipelines-task-lib": "^5.2.11",
     "vss-web-extension-sdk": "^5.141.0"
   }
 }
