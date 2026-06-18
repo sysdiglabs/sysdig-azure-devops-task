@@ -37,6 +37,8 @@ jobs:
 
     - name: Get Azure DevOps access token
       id: devops_token
+      # Use the runner's az (the one azure/login authenticated), not the nixpkgs az.
+      shell: bash
       run: |
         TOKEN="$(az account get-access-token --resource "${{ secrets.AZURE_MARKETPLACE_ACCESS_SCOPE }}" --query accessToken -o tsv)"
         echo "::add-mask::$TOKEN"

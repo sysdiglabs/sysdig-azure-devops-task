@@ -63,6 +63,8 @@ jobs:
     - name: Get Azure DevOps access token
       if: steps.check_version.outputs.changed == 'true'
       id: get_token
+      # Use the runner's az (the one azure/login authenticated), not the nixpkgs az.
+      shell: bash
       run: |
         echo "AZURE_DEVOPS_ACCESS_TOKEN=$(az account get-access-token --resource ${{ secrets.AZURE_MARKETPLACE_ACCESS_SCOPE }} --query accessToken -o tsv)" >> $GITHUB_ENV
 

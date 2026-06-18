@@ -9,3 +9,5 @@ id
 local_text.txt
 .direnv
 result
+.env
+.secrets

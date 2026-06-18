@@ -51,6 +51,18 @@ update-tfx:
 rehash-tfx:
     #!/usr/bin/env bash
     set -euo pipefail
-    rehash() { sd "${1} = \".*\";" "${1} = \"\";" nix/tfx-cli.nix; h="$( (nix build -L --no-link .#tfx-cli || true) 2>&1 | sed -nE 's/.*got:[[:space:]]+([^ ]+).*/\1/p' | tail -1)"; [ -n "${h}" ] && sd "${1} = \"\";" "${1} = \"${h}\";" nix/tfx-cli.nix && echo "${1} -> ${h}"; }
+    rehash() {
+        local key="$1" old new
+        old="$(grep -oE "${key} = \"[^\"]*\"" nix/tfx-cli.nix | head -1)"
+        sd "${key} = \".*\";" "${key} = \"\";" nix/tfx-cli.nix
+        new="$( (nix build -L --no-link .#tfx-cli || true) 2>&1 | sed -nE 's/.*got:[[:space:]]+([^ ]+).*/\1/p' | tail -1)"
+        if [ -z "${new}" ]; then
+            sd "${key} = \".*\";" "${old};" nix/tfx-cli.nix
+            echo "error: could not parse a new ${key}; restored previous value" >&2
+            exit 1
+        fi
+        sd "${key} = \"\";" "${key} = \"${new}\";" nix/tfx-cli.nix
+        echo "${key} -> ${new}"
+    }
     rehash hash
     rehash npmDepsHash
