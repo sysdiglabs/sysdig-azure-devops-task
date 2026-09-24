@@ -96,7 +96,7 @@ steps:
     verbose: true
     jsonOutput: true
     jsonOutputFile: 'sysdig-cli-scan-output.json'
-    sysdigCliScannerVersion: '1.6.0'
+    sysdigCliScannerVersion: '1.30.1' # newest-version-marker — DO NOT REMOVE; auto-updated by `just update-cli-scanner`
     policy: my_custom_policy,my-custom-policy-ab
 
 - task: PublishBuildArtifacts@1
@@ -141,7 +141,7 @@ steps:
 
 - **JSON Output File (`jsonOutputFile`)**: The file name to export the JSON result to. This will be ignored if `jsonOutput` is `false`. Default: `sysdig-cli-scan-output.json`,    
 
-- **Sysdig CLI Scanner Version (`sysdigCliScannerVersion`)**: The version of the Sysdig CLI Scanner to use. Will use the latest version if not specified. Default: `latest`,  
+- **Sysdig CLI Scanner Version (`sysdigCliScannerVersion`)**: The version of the Sysdig CLI Scanner to use. Will use the latest version if not specified. Versions are supported for 1 year after release; oldest version tested is <!-- oldest-version-marker: DO NOT REMOVE; auto-updated by `just update-oldest-cli-scanner` -->1.23.0<!-- /oldest-version-marker -->. Default: `latest`,  
 
 - **Policy (`policy`)**: Policy to evaluate in the pipeline execution. If not specified, only the Always Apply policy will be evaluated. Default: `null`,  
 

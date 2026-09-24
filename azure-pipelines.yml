@@ -66,8 +66,10 @@ steps:
       export INPUT_IMAGE='$(imageName)'
       export INPUT_VERBOSE='true'
       export INPUT_FAILBUILD='false'
-      export INPUT_SYSDIGCLISCANNERVERSION='latest'
 
-      # Run the task directly
-      node sysdig-cli-scan-task/dist/index.js
+      # Run the task directly, with the default (latest) and the oldest supported scanner
+      for version in latest 1.23.0; do # oldest-version-marker — DO NOT REMOVE; auto-updated by `just update-oldest-cli-scanner`
+        echo "Running smoke test with sysdig-cli-scanner ${version}..."
+        INPUT_SYSDIGCLISCANNERVERSION="${version}" node sysdig-cli-scan-task/dist/index.js
+      done
   displayName: 'Local smoke-run of the task'
