@@ -26,8 +26,12 @@
           mkShell {
             packages = [
               azure-cli
+              # GNU tools the justfile `scanner` recipes rely on (BSD versions on macOS break them).
+              coreutils
               curl
               git
+              gnugrep
+              gnused
               jq
               just
               nodejs_22
