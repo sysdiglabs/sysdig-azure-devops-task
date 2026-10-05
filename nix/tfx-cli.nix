@@ -7,16 +7,16 @@
 }:
 buildNpmPackage rec {
   pname = "tfx-cli";
-  version = "0.23.3";
+  version = "0.24.2";
 
   src = fetchFromGitHub {
     owner = "Microsoft";
     repo = "tfs-cli";
-    rev = "3c12ccb53f3fd700224d0db4490ebc0613df0b7e";
-    hash = "sha256-gnADqxXmaweeaDzV3BTwVzHGjm7qZ4/QNWpx60iJLJ8=";
+    rev = "69cc3ea887ccb08fccc2b37ffeacc1bdb8dddb7c";
+    hash = "sha256-GXi/PNSzX3RRisX7rEXahu3sVldhee9IYMmaqx0JF+s=";
   };
 
-  npmDepsHash = "sha256-wZS8UZNmiuk68NKe8FJzHgqtY9Fs7oZEZALtuB6HRS0=";
+  npmDepsHash = "sha256-sOraxuomTy6M+ws5I7TOYzdzTpAx+nUFcRT+tg0dfAk=";
 
   # `npm run build` is `tsc -p .`; postbuild copies the bin entrypoint.
   npmBuildScript = "build";
