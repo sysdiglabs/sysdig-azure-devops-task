@@ -1,6 +1,9 @@
 {
   "dependencies": {
-    "azure-pipelines-task-lib": "^5.2.11",
+    "azure-pipelines-task-lib": "^5.281.0",
     "vss-web-extension-sdk": "^5.141.0"
+  },
+  "overrides": {
+    "brace-expansion": "^1.1.21"
   }
 }
