@@ -1,6 +1,6 @@
 {
   "name": "sysdig-cli-scan-task",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Sysdig Secure Scan Task",
   "main": "index.js",
   "scripts": {
@@ -20,12 +20,15 @@
   "homepage": "https://github.com/sysdiglabs/sysdig-azure-devops-task.git#readme",
   "dependencies": {
     "@types/http-proxy-agent": "^4.0.1",
-    "azure-pipelines-task-lib": "^5.2.11",
+    "azure-pipelines-task-lib": "^5.281.0",
     "https-proxy-agent": "^7.0.4"
   },
   "devDependencies": {
     "@types/node": "^20.0.0",
     "@types/q": "^1.5.5",
     "typescript": "^5.0.0"
+  },
+  "overrides": {
+    "brace-expansion": "^1.1.21"
   }
 }
