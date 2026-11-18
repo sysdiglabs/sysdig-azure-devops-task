@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "azure-pipelines-task-lib": "^5.281.0",
+    "azure-pipelines-task-lib": "^5.283.2",
     "vss-web-extension-sdk": "^5.141.0"
   },
   "overrides": {
